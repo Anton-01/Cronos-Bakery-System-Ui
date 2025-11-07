@@ -1,0 +1,174 @@
+@import 'variables';
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 $spacing-md 0;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-tight;
+  color: $text-primary;
+}
+
+h1 {
+  font-size: $font-size-xxxl;
+  font-weight: $font-weight-light;
+}
+
+h2 {
+  font-size: $font-size-xxl;
+}
+
+h3 {
+  font-size: $font-size-xl;
+}
+
+h4 {
+  font-size: $font-size-lg;
+}
+
+h5 {
+  font-size: $font-size-base;
+}
+
+h6 {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+}
+
+// Paragraphs
+p {
+  margin: 0 0 $spacing-md 0;
+  line-height: $line-height-base;
+}
+
+// Links
+a {
+  color: $primary-color;
+  text-decoration: none;
+  transition: color $transition-duration-fast $transition-timing;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
+}
+
+// Lists
+ul,
+ol {
+  margin: 0 0 $spacing-md 0;
+  padding-left: $spacing-lg;
+}
+
+li {
+  margin-bottom: $spacing-xs;
+}
+
+// Text utilities
+.text-primary {
+  color: $text-primary;
+}
+
+.text-secondary {
+  color: $text-secondary;
+}
+
+.text-disabled {
+  color: $text-disabled;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.font-weight-light {
+  font-weight: $font-weight-light;
+}
+
+.font-weight-regular {
+  font-weight: $font-weight-regular;
+}
+
+.font-weight-medium {
+  font-weight: $font-weight-medium;
+}
+
+.font-weight-bold {
+  font-weight: $font-weight-bold;
+}
+
+// Font sizes
+.text-xs {
+  font-size: $font-size-xs;
+}
+
+.text-sm {
+  font-size: $font-size-sm;
+}
+
+.text-base {
+  font-size: $font-size-base;
+}
+
+.text-lg {
+  font-size: $font-size-lg;
+}
+
+.text-xl {
+  font-size: $font-size-xl;
+}
+
+.text-xxl {
+  font-size: $font-size-xxl;
+}
+
+// Code
+code {
+  font-family: $font-family-monospace;
+  font-size: 0.875em;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: $border-radius-sm;
+}
+
+pre {
+  font-family: $font-family-monospace;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: $spacing-md;
+  border-radius: $border-radius-md;
+  overflow-x: auto;
+
+  code {
+    background: none;
+    padding: 0;
+  }
+}
