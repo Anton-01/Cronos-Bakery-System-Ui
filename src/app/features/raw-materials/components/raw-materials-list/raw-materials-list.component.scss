@@ -1,0 +1,195 @@
+@import '../../../../../styles/variables';
+
+.raw-materials-list-container {
+  padding: $spacing-lg;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.filter-card {
+  margin-bottom: $spacing-lg;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: $spacing-md 0;
+
+  h1 {
+    margin: 0;
+    font-size: $font-size-2xl;
+    font-weight: 600;
+  }
+}
+
+.filter-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-md;
+  margin-top: $spacing-md;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .clear-button {
+    align-self: flex-end;
+    height: 56px;
+  }
+}
+
+.table-card {
+  margin-bottom: $spacing-lg;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-top: $spacing-md;
+}
+
+.materials-table {
+  width: 100%;
+  background: white;
+
+  th {
+    background-color: $color-gray-50;
+    font-weight: 600;
+    font-size: $font-size-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  td {
+    padding: $spacing-md;
+  }
+
+  tr:hover {
+    background-color: $color-gray-50;
+  }
+}
+
+.material-name {
+  strong {
+    display: block;
+    margin-bottom: $spacing-xs;
+  }
+
+  .allergens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+    margin-top: $spacing-xs;
+  }
+
+  .allergen-chip {
+    font-size: $font-size-xs;
+    height: 20px;
+    padding: 0 $spacing-xs;
+    background-color: $color-warning-light;
+    color: $color-warning-dark;
+  }
+}
+
+.stock-info {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+
+  .low-stock {
+    color: $color-danger;
+    font-weight: 600;
+  }
+
+  .warning-icon {
+    color: $color-warning;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+mat-chip {
+  &.active {
+    background-color: $color-success-light;
+    color: $color-success-dark;
+  }
+
+  &.inactive {
+    background-color: $color-gray-200;
+    color: $color-gray-700;
+  }
+}
+
+.no-data,
+.loading-container,
+.no-data-container {
+  text-align: center;
+  padding: $spacing-2xl;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: $color-gray-400;
+    margin-bottom: $spacing-md;
+  }
+
+  p {
+    color: $color-gray-600;
+    font-size: $font-size-md;
+  }
+}
+
+.loading-icon {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive design
+@media (max-width: $breakpoint-md) {
+  .raw-materials-list-container {
+    padding: $spacing-md;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-md;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .filter-form {
+    grid-template-columns: 1fr;
+
+    .clear-button {
+      width: 100%;
+    }
+  }
+
+  .table-container {
+    overflow-x: scroll;
+
+    .materials-table {
+      min-width: 800px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .raw-materials-list-container {
+    padding: $spacing-sm;
+  }
+}

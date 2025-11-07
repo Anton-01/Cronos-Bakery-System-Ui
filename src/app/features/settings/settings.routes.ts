@@ -4,7 +4,19 @@ export const routes: Routes = [
   {
     path: '',
     children: [
-      // TODO: Implement settings routes
+      {
+        path: '',
+        redirectTo: 'profile',
+        pathMatch: 'full',
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/user-profile/user-profile.component').then(
+            m => m.UserProfileComponent
+          ),
+      },
+      // TODO: Add more routes for other settings
     ],
   },
 ];
