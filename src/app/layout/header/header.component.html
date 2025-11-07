@@ -1,0 +1,71 @@
+<mat-toolbar color="primary" class="header">
+  <div class="header-content">
+    <!-- Left Section: Menu Button & Logo -->
+    <div class="header-left">
+      <button
+        mat-icon-button
+        (click)="onToggleSidebar()"
+        matTooltip="Toggle Menu"
+        class="menu-button"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <a routerLink="/dashboard" class="logo">
+        <mat-icon class="logo-icon">bakery_dining</mat-icon>
+        <span class="logo-text">Cronos Bakery</span>
+      </a>
+    </div>
+
+    <!-- Right Section: Actions & User Menu -->
+    <div class="header-right">
+      <!-- Theme Toggle -->
+      <button
+        mat-icon-button
+        (click)="onToggleTheme()"
+        matTooltip="Toggle Theme"
+        class="action-button"
+      >
+        <mat-icon>brightness_6</mat-icon>
+      </button>
+
+      <!-- Notifications -->
+      <button
+        mat-icon-button
+        [matBadge]="notificationCount"
+        matBadgeColor="warn"
+        matTooltip="Notifications"
+        class="action-button"
+      >
+        <mat-icon>notifications</mat-icon>
+      </button>
+
+      <!-- User Menu -->
+      <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+        <div class="user-info" *ngIf="currentUser$ | async as user">
+          <div class="user-avatar">
+            <mat-icon>account_circle</mat-icon>
+          </div>
+          <span class="user-name">{{ user.username }}</span>
+          <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+        </div>
+      </button>
+
+      <mat-menu #userMenu="matMenu" class="user-menu">
+        <button mat-menu-item (click)="onProfile()">
+          <mat-icon>person</mat-icon>
+          <span>Mi Perfil</span>
+        </button>
+        <button mat-menu-item (click)="onSettings()">
+          <mat-icon>settings</mat-icon>
+          <span>Configuración</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="onLogout()">
+          <mat-icon>logout</mat-icon>
+          <span>Cerrar Sesión</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</mat-toolbar>

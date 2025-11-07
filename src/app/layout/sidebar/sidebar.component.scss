@@ -1,0 +1,106 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.sidebar {
+  position: fixed;
+  top: $header-height;
+  left: -$sidebar-width;
+  bottom: 0;
+  width: $sidebar-width;
+  background-color: $sidebar-background;
+  color: white;
+  box-shadow: $shadow-lg;
+  transition: left $transition-duration-base $transition-timing;
+  z-index: $z-index-fixed;
+  display: flex;
+  flex-direction: column;
+
+  @include custom-scrollbar(8px, rgba(255, 255, 255, 0.3));
+
+  &.open {
+    left: 0;
+  }
+
+  @include respond-to-max($breakpoint-md) {
+    &.open {
+      left: 0;
+    }
+  }
+}
+
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: $spacing-md 0;
+
+  ::ng-deep {
+    .mat-mdc-list {
+      padding: 0;
+    }
+
+    .mat-mdc-list-item {
+      color: rgba(255, 255, 255, 0.7);
+      height: 56px;
+      padding: 0 $spacing-lg;
+      margin: 0;
+      border-left: 3px solid transparent;
+      transition: all $transition-duration-fast;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: white;
+      }
+
+      &.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-left-color: $accent-color;
+        color: white;
+
+        .nav-icon {
+          color: $accent-color;
+        }
+      }
+    }
+
+    .mat-mdc-list-item-icon {
+      color: inherit;
+      margin-right: $spacing-md;
+    }
+  }
+}
+
+.nav-item {
+  @include flex-center;
+  justify-content: flex-start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.nav-label {
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+}
+
+.sidebar-footer {
+  padding: $spacing-md $spacing-lg;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-version {
+  @include flex-center;
+  gap: $spacing-sm;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: $font-size-sm;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
