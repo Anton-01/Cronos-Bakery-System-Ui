@@ -1,0 +1,93 @@
+// Color Palette
+$primary-color: #3f51b5;
+$accent-color: #ff4081;
+$warn-color: #f44336;
+$success-color: #4caf50;
+$info-color: #2196f3;
+$warning-color: #ff9800;
+
+// Text Colors
+$text-primary: rgba(0, 0, 0, 0.87);
+$text-secondary: rgba(0, 0, 0, 0.54);
+$text-disabled: rgba(0, 0, 0, 0.38);
+$text-hint: rgba(0, 0, 0, 0.38);
+
+// Background Colors
+$background-color: #fafafa;
+$card-background: #ffffff;
+$sidebar-background: #263238;
+
+// Border Colors
+$border-color: #e0e0e0;
+$divider-color: rgba(0, 0, 0, 0.12);
+
+// Spacing
+$spacing-unit: 8px;
+$spacing-xs: $spacing-unit * 0.5; // 4px
+$spacing-sm: $spacing-unit; // 8px
+$spacing-md: $spacing-unit * 2; // 16px
+$spacing-lg: $spacing-unit * 3; // 24px
+$spacing-xl: $spacing-unit * 4; // 32px
+$spacing-xxl: $spacing-unit * 6; // 48px
+
+// Border Radius
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-round: 50%;
+
+// Shadows
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$shadow-md: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+$shadow-xl: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+
+// Typography
+$font-family-base: 'Roboto', 'Helvetica Neue', sans-serif;
+$font-family-monospace: 'Roboto Mono', monospace;
+
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
+$font-size-xxl: 1.5rem; // 24px
+$font-size-xxxl: 2rem; // 32px
+
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+$line-height-base: 1.5;
+$line-height-tight: 1.25;
+$line-height-loose: 1.75;
+
+// Layout
+$header-height: 64px;
+$sidebar-width: 280px;
+$sidebar-width-collapsed: 64px;
+$footer-height: 56px;
+
+// Breakpoints
+$breakpoint-xs: 0;
+$breakpoint-sm: 600px;
+$breakpoint-md: 960px;
+$breakpoint-lg: 1280px;
+$breakpoint-xl: 1920px;
+
+// Z-index
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// Transitions
+$transition-duration-fast: 150ms;
+$transition-duration-base: 250ms;
+$transition-duration-slow: 350ms;
+
+$transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
