@@ -1,12 +1,22 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NgxSpinnerModule],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+  standalone: true,
 })
-export class App {
-  protected readonly title = signal('cronos-bakery-frontend');
+export class App implements OnInit {
+  title = 'Cronos Bakery System';
+
+  constructor(private themeService: ThemeService) {}
+
+  ngOnInit(): void {
+    // Initialize theme listener for auto mode
+    this.themeService.initializeAutoThemeListener();
+  }
 }

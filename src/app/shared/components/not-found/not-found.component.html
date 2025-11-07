@@ -1,0 +1,31 @@
+<div class="error-container">
+  <div class="error-content">
+    <div class="error-icon-container">
+      <mat-icon class="error-icon">search_off</mat-icon>
+    </div>
+
+    <h1 class="error-code">404</h1>
+    <h2 class="error-title">Página No Encontrada</h2>
+    <p class="error-description">
+      Lo sentimos, la página que estás buscando no existe o ha sido movida.
+    </p>
+
+    <div class="error-actions">
+      <button mat-raised-button color="primary" routerLink="/dashboard" class="primary-action">
+        <mat-icon>home</mat-icon>
+        Ir al Dashboard
+      </button>
+
+      <button mat-button color="accent" routerLink="/auth/login" class="secondary-action">
+        Iniciar Sesión
+      </button>
+    </div>
+
+    <div class="error-help">
+      <p class="help-text">
+        Si crees que esto es un error, por favor
+        <a href="mailto:support@cronosbakery.com" class="help-link">contáctanos</a>
+      </p>
+    </div>
+  </div>
+</div>

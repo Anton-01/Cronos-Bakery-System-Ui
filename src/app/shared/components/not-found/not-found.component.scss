@@ -1,0 +1,118 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.error-container {
+  @include flex-center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 15%) 100%);
+  padding: $spacing-md;
+}
+
+.error-content {
+  @include flex-column;
+  @include flex-center;
+  gap: $spacing-lg;
+  text-align: center;
+  max-width: 600px;
+  background: white;
+  padding: $spacing-xxl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-xl;
+
+  @include respond-to-max($breakpoint-sm) {
+    padding: $spacing-xl;
+  }
+}
+
+.error-icon-container {
+  @include flex-center;
+  width: 120px;
+  height: 120px;
+  border-radius: $border-radius-round;
+  background-color: rgba($warn-color, 0.1);
+}
+
+.error-icon {
+  font-size: 72px;
+  width: 72px;
+  height: 72px;
+  color: $warn-color;
+}
+
+.error-code {
+  margin: 0;
+  font-size: 96px;
+  font-weight: $font-weight-bold;
+  color: $primary-color;
+  line-height: 1;
+
+  @include respond-to-max($breakpoint-sm) {
+    font-size: 72px;
+  }
+}
+
+.error-title {
+  margin: 0;
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+}
+
+.error-description {
+  margin: 0;
+  font-size: $font-size-base;
+  color: $text-secondary;
+  line-height: $line-height-loose;
+}
+
+.error-actions {
+  @include flex-center;
+  gap: $spacing-md;
+  margin-top: $spacing-lg;
+
+  @include respond-to-max($breakpoint-sm) {
+    flex-direction: column;
+    width: 100%;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+.primary-action {
+  @include flex-center;
+  gap: $spacing-xs;
+}
+
+.secondary-action {
+  color: $text-secondary;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+.error-help {
+  margin-top: $spacing-xl;
+  padding-top: $spacing-lg;
+  border-top: 1px solid $divider-color;
+}
+
+.help-text {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+.help-link {
+  color: $primary-color;
+  text-decoration: none;
+  font-weight: $font-weight-medium;
+  transition: color $transition-duration-fast;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+    text-decoration: underline;
+  }
+}

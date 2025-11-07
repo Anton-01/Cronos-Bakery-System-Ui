@@ -1,0 +1,198 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.auth-container {
+  @include flex-center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 15%) 100%);
+  padding: $spacing-md;
+}
+
+.auth-card-wrapper {
+  width: 100%;
+  max-width: 500px;
+}
+
+.auth-card {
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-xl;
+
+  @include respond-to-max($breakpoint-sm) {
+    padding: $spacing-lg;
+  }
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  padding: 0;
+}
+
+.auth-logo {
+  @include flex-column;
+  @include flex-center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+}
+
+.logo-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: $primary-color;
+}
+
+.auth-title {
+  margin: 0;
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $primary-color;
+}
+
+.auth-subtitle {
+  margin: 0;
+  font-size: $font-size-base;
+  color: $text-secondary;
+}
+
+.qr-section {
+  @include flex-column;
+  @include flex-center;
+  gap: $spacing-md;
+  margin-bottom: $spacing-xl;
+  padding: $spacing-lg;
+  background-color: rgba($primary-color, 0.05);
+  border-radius: $border-radius-md;
+  border: 2px dashed rgba($primary-color, 0.3);
+}
+
+.qr-code-container {
+  @include flex-center;
+  padding: $spacing-md;
+  background: white;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-sm;
+}
+
+.qr-instructions {
+  margin: 0;
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  max-width: 300px;
+}
+
+.auth-form {
+  @include flex-column;
+  gap: $spacing-md;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.code-input {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-medium;
+  letter-spacing: 0.5em;
+  text-align: center;
+  font-family: $font-family-monospace;
+}
+
+.qr-toggle-section {
+  text-align: center;
+  margin: $spacing-sm 0;
+}
+
+.qr-toggle-button {
+  @include flex-center;
+  gap: $spacing-xs;
+}
+
+.info-box {
+  @include flex-center;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  background-color: rgba($info-color, 0.1);
+  border-left: 4px solid $info-color;
+  border-radius: $border-radius-sm;
+  margin: $spacing-md 0;
+
+  @include respond-to-max($breakpoint-sm) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.info-icon {
+  color: $info-color;
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.info-content {
+  flex: 1;
+}
+
+.info-title {
+  margin: 0 0 $spacing-xs 0;
+  font-weight: $font-weight-medium;
+  font-size: $font-size-base;
+  color: $text-primary;
+}
+
+.info-text {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  line-height: $line-height-base;
+}
+
+.submit-button {
+  height: 48px;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  margin-top: $spacing-md;
+  position: relative;
+}
+
+.button-spinner {
+  margin: 0 auto;
+
+  ::ng-deep circle {
+    stroke: white;
+  }
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: $spacing-lg;
+}
+
+.back-button {
+  @include flex-center;
+  gap: $spacing-xs;
+  color: $text-secondary;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+// Angular Material overrides
+::ng-deep {
+  .auth-card {
+    .mat-mdc-form-field {
+      .mat-mdc-text-field-wrapper {
+        background-color: transparent;
+      }
+
+      .mat-mdc-form-field-icon-prefix {
+        color: $text-secondary;
+      }
+    }
+  }
+}

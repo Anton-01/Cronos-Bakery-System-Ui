@@ -1,0 +1,128 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.error-container {
+  @include flex-center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, $warn-color 0%, darken($warn-color, 15%) 100%);
+  padding: $spacing-md;
+}
+
+.error-content {
+  @include flex-column;
+  @include flex-center;
+  gap: $spacing-lg;
+  text-align: center;
+  max-width: 600px;
+  background: white;
+  padding: $spacing-xxl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-xl;
+
+  @include respond-to-max($breakpoint-sm) {
+    padding: $spacing-xl;
+  }
+}
+
+.error-icon-container {
+  @include flex-center;
+  width: 120px;
+  height: 120px;
+  border-radius: $border-radius-round;
+  background-color: rgba($warn-color, 0.1);
+}
+
+.error-icon {
+  font-size: 72px;
+  width: 72px;
+  height: 72px;
+  color: $warn-color;
+}
+
+.error-code {
+  margin: 0;
+  font-size: 96px;
+  font-weight: $font-weight-bold;
+  color: $warn-color;
+  line-height: 1;
+
+  @include respond-to-max($breakpoint-sm) {
+    font-size: 72px;
+  }
+}
+
+.error-title {
+  margin: 0;
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $text-primary;
+}
+
+.error-description {
+  margin: 0;
+  font-size: $font-size-base;
+  color: $text-secondary;
+  line-height: $line-height-loose;
+}
+
+.error-actions {
+  @include flex-center;
+  gap: $spacing-md;
+  margin-top: $spacing-lg;
+
+  @include respond-to-max($breakpoint-sm) {
+    flex-direction: column;
+    width: 100%;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+.primary-action {
+  @include flex-center;
+  gap: $spacing-xs;
+}
+
+.secondary-action {
+  @include flex-center;
+  gap: $spacing-xs;
+
+  &:hover {
+    background-color: rgba($warn-color, 0.1);
+  }
+}
+
+.error-help {
+  @include flex-center;
+  gap: $spacing-md;
+  margin-top: $spacing-xl;
+  padding: $spacing-md;
+  background-color: rgba($info-color, 0.1);
+  border-radius: $border-radius-md;
+  border-left: 4px solid $info-color;
+
+  @include respond-to-max($breakpoint-sm) {
+    flex-direction: column;
+  }
+}
+
+.help-icon {
+  color: $info-color;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.help-text {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  text-align: left;
+
+  @include respond-to-max($breakpoint-sm) {
+    text-align: center;
+  }
+}
