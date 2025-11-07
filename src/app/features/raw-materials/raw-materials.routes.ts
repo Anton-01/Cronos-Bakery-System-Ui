@@ -4,14 +4,14 @@ export const routes: Routes = [
   {
     path: '',
     children: [
-      // TODO: Implement raw materials routes
-      // {
-      //   path: '',
-      //   loadComponent: () =>
-      //     import('./components/material-list/material-list.component').then(
-      //       (m) => m.MaterialListComponent
-      //     ),
-      // },
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/raw-materials-list/raw-materials-list.component').then(
+            m => m.RawMaterialsListComponent
+          ),
+      },
+      // TODO: Add more routes for create, edit, details
     ],
   },
 ];

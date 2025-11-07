@@ -4,7 +4,14 @@ export const routes: Routes = [
   {
     path: '',
     children: [
-      // TODO: Implement recipes routes
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/recipes-list/recipes-list.component').then(
+            m => m.RecipesListComponent
+          ),
+      },
+      // TODO: Add more routes for create, edit, details
     ],
   },
 ];
