@@ -1,0 +1,52 @@
+@import '../../../styles/variables';
+@import '../../../styles/mixins';
+
+.footer {
+  height: $footer-height;
+  background-color: $card-background;
+  border-top: 1px solid $border-color;
+  box-shadow: $shadow-sm;
+  margin-top: auto;
+}
+
+.footer-content {
+  @include flex-between;
+  height: 100%;
+  padding: 0 $spacing-lg;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @include respond-to-max($breakpoint-sm) {
+    flex-direction: column;
+    justify-content: center;
+    padding: $spacing-sm;
+  }
+}
+
+.footer-left {
+  @include flex-center;
+}
+
+.copyright {
+  margin: 0;
+  color: $text-secondary;
+  font-size: $font-size-sm;
+
+  @include respond-to-max($breakpoint-sm) {
+    font-size: $font-size-xs;
+    text-align: center;
+  }
+}
+
+.footer-right {
+  @include flex-center;
+  gap: $spacing-md;
+}
+
+.version {
+  color: $text-disabled;
+  font-size: $font-size-xs;
+  padding: $spacing-xs $spacing-sm;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: $border-radius-sm;
+}

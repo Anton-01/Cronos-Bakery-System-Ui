@@ -1,0 +1,145 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.auth-container {
+  @include flex-center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 15%) 100%);
+  padding: $spacing-md;
+}
+
+.auth-card-wrapper {
+  width: 100%;
+  max-width: 450px;
+}
+
+.auth-card {
+  padding: $spacing-xl;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-xl;
+
+  @include respond-to-max($breakpoint-sm) {
+    padding: $spacing-lg;
+  }
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  padding: 0;
+}
+
+.auth-logo {
+  @include flex-column;
+  @include flex-center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+}
+
+.logo-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: $primary-color;
+}
+
+.auth-title {
+  margin: 0;
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  color: $primary-color;
+}
+
+.auth-subtitle {
+  margin: 0;
+  font-size: $font-size-base;
+  color: $text-secondary;
+}
+
+.auth-form {
+  @include flex-column;
+  gap: $spacing-md;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.auth-options {
+  @include flex-between;
+  align-items: center;
+  margin: $spacing-sm 0;
+
+  @include respond-to-max($breakpoint-sm) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-sm;
+  }
+}
+
+.forgot-link {
+  color: $primary-color;
+  text-decoration: none;
+  font-size: $font-size-sm;
+  transition: color $transition-duration-fast;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+    text-decoration: underline;
+  }
+}
+
+.submit-button {
+  height: 48px;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  margin-top: $spacing-md;
+  position: relative;
+}
+
+.button-spinner {
+  margin: 0 auto;
+
+  ::ng-deep circle {
+    stroke: white;
+  }
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: $spacing-lg;
+}
+
+.register-text {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+.register-link {
+  color: $primary-color;
+  text-decoration: none;
+  font-weight: $font-weight-medium;
+  transition: color $transition-duration-fast;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+    text-decoration: underline;
+  }
+}
+
+// Angular Material overrides
+::ng-deep {
+  .auth-card {
+    .mat-mdc-form-field {
+      .mat-mdc-text-field-wrapper {
+        background-color: transparent;
+      }
+
+      .mat-mdc-form-field-icon-prefix,
+      .mat-mdc-form-field-icon-suffix {
+        color: $text-secondary;
+      }
+    }
+  }
+}
