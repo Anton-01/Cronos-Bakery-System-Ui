@@ -1,0 +1,33 @@
+<div class="error-container">
+  <div class="error-content">
+    <div class="error-icon-container">
+      <mat-icon class="error-icon">block</mat-icon>
+    </div>
+
+    <h1 class="error-code">403</h1>
+    <h2 class="error-title">Acceso Denegado</h2>
+    <p class="error-description">
+      No tienes los permisos necesarios para acceder a esta página. Si crees que esto es un error,
+      contacta al administrador del sistema.
+    </p>
+
+    <div class="error-actions">
+      <button mat-raised-button color="primary" (click)="onGoBack()" class="primary-action">
+        <mat-icon>arrow_back</mat-icon>
+        Volver al Dashboard
+      </button>
+
+      <button mat-button color="warn" (click)="onLogout()" class="secondary-action">
+        <mat-icon>logout</mat-icon>
+        Cerrar Sesión
+      </button>
+    </div>
+
+    <div class="error-help">
+      <mat-icon class="help-icon">info</mat-icon>
+      <p class="help-text">
+        Si necesitas acceso a esta sección, solicítalo al administrador de tu cuenta.
+      </p>
+    </div>
+  </div>
+</div>

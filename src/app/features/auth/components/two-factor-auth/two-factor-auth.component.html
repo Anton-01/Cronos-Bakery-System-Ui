@@ -1,0 +1,106 @@
+<div class="auth-container">
+  <div class="auth-card-wrapper">
+    <mat-card class="auth-card">
+      <mat-card-header class="auth-header">
+        <div class="auth-logo">
+          <mat-icon class="logo-icon">verified_user</mat-icon>
+          <h1 class="auth-title">Verificación en Dos Pasos</h1>
+        </div>
+        <p class="auth-subtitle">Ingresa el código de tu aplicación de autenticación</p>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- QR Code Section -->
+        <div class="qr-section" *ngIf="showQrCode">
+          <div class="qr-code-container">
+            <qrcode
+              [qrdata]="qrCodeUrl"
+              [width]="200"
+              [errorCorrectionLevel]="'M'"
+              [colorDark]="'#3f51b5'"
+              [colorLight]="'#ffffff'"
+            ></qrcode>
+          </div>
+          <p class="qr-instructions">
+            Escanea este código QR con tu aplicación de autenticación (Google Authenticator, Authy,
+            etc.)
+          </p>
+        </div>
+
+        <form [formGroup]="twoFactorForm" (ngSubmit)="onSubmit()" class="auth-form">
+          <!-- 2FA Code Field -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Código de 6 dígitos</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="code"
+              placeholder="000000"
+              maxlength="6"
+              autocomplete="one-time-code"
+              class="code-input"
+            />
+            <mat-icon matPrefix>pin</mat-icon>
+            <mat-error *ngIf="f['code'].hasError('required')">
+              El código es requerido
+            </mat-error>
+            <mat-error *ngIf="f['code'].hasError('invalidTwoFactorCode')">
+              El código debe tener 6 dígitos
+            </mat-error>
+          </mat-form-field>
+
+          <!-- QR Code Toggle -->
+          <div class="qr-toggle-section">
+            <button
+              mat-button
+              type="button"
+              color="primary"
+              (click)="toggleQrCode()"
+              class="qr-toggle-button"
+            >
+              <mat-icon>{{ showQrCode ? 'visibility_off' : 'qr_code_2' }}</mat-icon>
+              {{ showQrCode ? 'Ocultar código QR' : 'Mostrar código QR' }}
+            </button>
+          </div>
+
+          <!-- Info Box -->
+          <div class="info-box">
+            <mat-icon class="info-icon">info</mat-icon>
+            <div class="info-content">
+              <p class="info-title">¿No tienes el código?</p>
+              <p class="info-text">
+                Usa tu aplicación de autenticación (Google Authenticator, Authy, Microsoft
+                Authenticator) para obtener el código de 6 dígitos.
+              </p>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            class="submit-button full-width"
+            [disabled]="loading"
+          >
+            <span *ngIf="!loading">Verificar</span>
+            <mat-spinner *ngIf="loading" diameter="20" class="button-spinner"></mat-spinner>
+          </button>
+
+          <!-- Back to Login -->
+          <div class="auth-footer">
+            <button
+              mat-button
+              type="button"
+              (click)="onBackToLogin()"
+              class="back-button"
+            >
+              <mat-icon>arrow_back</mat-icon>
+              Volver al inicio de sesión
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

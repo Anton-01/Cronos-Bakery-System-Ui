@@ -1,0 +1,86 @@
+<div class="dashboard-container">
+  <!-- Page Header -->
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Dashboard</h1>
+    <p class="dashboard-subtitle">Bienvenido a Cronos Bakery System</p>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Cargando datos...</p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid" *ngIf="!loading">
+    <mat-card
+      *ngFor="let card of statCards"
+      class="stat-card"
+      [class.clickable]="card.route"
+      [routerLink]="card.route"
+    >
+      <div class="stat-card-content">
+        <div class="stat-icon-container" [style.background-color]="card.color + '20'">
+          <mat-icon class="stat-icon" [style.color]="card.color">{{ card.icon }}</mat-icon>
+        </div>
+
+        <div class="stat-details">
+          <h3 class="stat-title">{{ card.title }}</h3>
+          <p class="stat-value">{{ card.value }}</p>
+
+          <div class="stat-change" *ngIf="card.change" [ngClass]="getChangeClass(card.changeType)">
+            <mat-icon class="change-icon">{{ getChangeIcon(card.changeType) }}</mat-icon>
+            <span class="change-value">{{ card.change }}%</span>
+            <span class="change-label">vs último mes</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions-section" *ngIf="!loading">
+    <h2 class="section-title">Acciones Rápidas</h2>
+
+    <div class="quick-actions-grid">
+      <mat-card class="action-card" routerLink="/raw-materials/new">
+        <mat-icon class="action-icon">add_circle</mat-icon>
+        <h3 class="action-title">Nueva Materia Prima</h3>
+        <p class="action-description">Agregar nueva materia prima al inventario</p>
+      </mat-card>
+
+      <mat-card class="action-card" routerLink="/recipes/new">
+        <mat-icon class="action-icon">restaurant</mat-icon>
+        <h3 class="action-title">Nueva Receta</h3>
+        <p class="action-description">Crear una nueva receta de panadería</p>
+      </mat-card>
+
+      <mat-card class="action-card" routerLink="/quotes/new">
+        <mat-icon class="action-icon">description</mat-icon>
+        <h3 class="action-title">Nueva Cotización</h3>
+        <p class="action-description">Generar cotización para cliente</p>
+      </mat-card>
+
+      <mat-card class="action-card" routerLink="/inventory">
+        <mat-icon class="action-icon">warehouse</mat-icon>
+        <h3 class="action-title">Ver Inventario</h3>
+        <p class="action-description">Revisar estado del inventario</p>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Recent Activity (Placeholder) -->
+  <div class="recent-activity-section" *ngIf="!loading">
+    <h2 class="section-title">Actividad Reciente</h2>
+
+    <mat-card class="activity-card">
+      <div class="empty-state">
+        <mat-icon class="empty-icon">timeline</mat-icon>
+        <p class="empty-text">No hay actividad reciente</p>
+        <p class="empty-subtext">
+          Cuando realices acciones en el sistema, aparecerán aquí
+        </p>
+      </div>
+    </mat-card>
+  </div>
+</div>
