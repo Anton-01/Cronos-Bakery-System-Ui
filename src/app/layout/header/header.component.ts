@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDividerModule } from '@angular/material/divider';
 import { AuthService } from '../../core/services/auth.service';
 import { ThemeService } from '../../core/services/theme.service';
 import { User } from '../../shared/models';
@@ -24,6 +25,7 @@ import { Observable } from 'rxjs';
     MatMenuModule,
     MatBadgeModule,
     MatTooltipModule,
+    MatDividerModule,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

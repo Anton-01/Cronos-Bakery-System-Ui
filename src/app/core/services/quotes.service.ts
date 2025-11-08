@@ -132,28 +132,28 @@ export class QuotesService {
    * Mark quote as sent
    */
   markAsSent(id: number): Observable<Quote> {
-    return this.updateQuoteStatus(id, 'SENT');
+    return this.updateQuoteStatus(id, QuoteStatus.SENT);
   }
 
   /**
    * Mark quote as accepted
    */
   markAsAccepted(id: number): Observable<Quote> {
-    return this.updateQuoteStatus(id, 'ACCEPTED');
+    return this.updateQuoteStatus(id, QuoteStatus.ACCEPTED);
   }
 
   /**
    * Mark quote as rejected
    */
   markAsRejected(id: number): Observable<Quote> {
-    return this.updateQuoteStatus(id, 'REJECTED');
+    return this.updateQuoteStatus(id, QuoteStatus.REJECTED);
   }
 
   /**
    * Mark quote as expired
    */
   markAsExpired(id: number): Observable<Quote> {
-    return this.updateQuoteStatus(id, 'EXPIRED');
+    return this.updateQuoteStatus(id, QuoteStatus.EXPIRED);
   }
 
   // ==================== Quote Sharing ====================

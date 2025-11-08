@@ -118,3 +118,6 @@ export interface QuoteAccessLog {
   ipAddress: string;
   userAgent: string;
 }
+
+// Type alias for backward compatibility
+export type Quote = QuoteResponse;

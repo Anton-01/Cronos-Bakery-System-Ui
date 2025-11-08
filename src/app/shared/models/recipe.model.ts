@@ -184,3 +184,8 @@ export interface RecipeVersionResponse {
   createdBy: string;
   snapshot: string; // JSON snapshot of the recipe
 }
+
+// Type aliases for backward compatibility
+export type Recipe = RecipeResponse;
+export type RecipeIngredient = RecipeIngredientResponse;
+export type RecipeCostBreakdown = RecipeCostResponse;

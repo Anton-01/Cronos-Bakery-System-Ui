@@ -121,3 +121,32 @@ export enum StockOperation {
   INLET = 'INLET',
   OUTLET = 'OUTLET',
 }
+
+// Type aliases for backward compatibility
+export type RawMaterial = RawMaterialResponse;
+export type RawMaterialCategory = CategoryResponse;
+export type CreateCategoryRequest = {
+  name: string;
+  description?: string;
+};
+export type UpdateCategoryRequest = Partial<CreateCategoryRequest>;
+export type MeasurementUnit = MeasurementUnitResponse;
+export type CreateUnitRequest = {
+  code: string;
+  name: string;
+  namePlural: string;
+  type: MeasurementUnitType;
+};
+export type UpdateUnitRequest = Partial<CreateUnitRequest>;
+export type UnitConversion = {
+  id: number;
+  fromUnit: MeasurementUnitResponse;
+  toUnit: MeasurementUnitResponse;
+  factor: number;
+};
+export type CreateConversionRequest = {
+  fromUnitId: number;
+  toUnitId: number;
+  factor: number;
+};
+export type Allergen = AllergenResponse;
