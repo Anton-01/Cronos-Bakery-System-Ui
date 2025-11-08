@@ -160,3 +160,19 @@ export interface DeviceFingerprintResponse {
   lastUsed: string;
   addedAt: string;
 }
+
+// Type aliases for backward compatibility
+export type UserProfile = UserProfileResponse;
+export type UpdateProfileRequest = Partial<UserProfileResponse>;
+export type ChangePasswordRequest = {
+  currentPassword: string;
+  newPassword: string;
+};
+export type UserSession = UserSessionResponse;
+export type BrandingConfig = {
+  logoUrl?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  companyName?: string;
+};
+export type UpdateBrandingRequest = Partial<BrandingConfig>;

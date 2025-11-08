@@ -19,46 +19,7 @@ import { Quote } from '../../../../shared/models/quote.model';
     MatIconModule,
     MatTableModule,
   ],
-  template: `
-    <div class="public-quote-container">
-      @if (loading) {
-        <mat-card>
-          <mat-card-content>
-            <p>Cargando cotización...</p>
-          </mat-card-content>
-        </mat-card>
-      } @else if (quote) {
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>
-              <h1>Cotización #{{ quote.quoteNumber }}</h1>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div class="quote-info">
-              <p><strong>Cliente:</strong> {{ quote.clientName }}</p>
-              <p><strong>Email:</strong> {{ quote.clientEmail }}</p>
-              <p><strong>Fecha:</strong> {{ quote.createdAt | date: 'dd/MM/yyyy' }}</p>
-              <p><strong>Total:</strong> ${{ quote.total | number: '1.2-2' }}</p>
-            </div>
-            <!-- TODO: Mostrar items de la cotización -->
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="downloadPdf()">
-              <mat-icon>download</mat-icon>
-              Descargar PDF
-            </button>
-          </mat-card-actions>
-        </mat-card>
-      } @else {
-        <mat-card>
-          <mat-card-content>
-            <p>Cotización no encontrada</p>
-          </mat-card-content>
-        </mat-card>
-      }
-    </div>
-  `,
+  templateUrl: './quote-public-view.component.html',
   styles: [`
     .public-quote-container {
       padding: 24px;
@@ -67,6 +28,22 @@ import { Quote } from '../../../../shared/models/quote.model';
     }
     .quote-info {
       margin: 20px 0;
+    }
+    .quote-items {
+      margin-top: 24px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      font-weight: bold;
+      background-color: #f5f5f5;
     }
   `],
 })

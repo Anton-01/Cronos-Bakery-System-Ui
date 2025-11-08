@@ -71,4 +71,21 @@ export class NotificationService {
       closeButton: true,
     });
   }
+
+  // Aliases for backward compatibility
+  showSuccess(message: string, title?: string): void {
+    this.success(message, title);
+  }
+
+  showError(message: string, title?: string): void {
+    this.error(message, title);
+  }
+
+  showWarning(message: string, title?: string): void {
+    this.warning(message, title);
+  }
+
+  showInfo(message: string, title?: string): void {
+    this.info(message, title);
+  }
 }

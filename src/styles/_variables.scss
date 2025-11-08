@@ -1,10 +1,59 @@
 // Color Palette
 $primary-color: #3f51b5;
+$primary-color-light: #7986cb;
+$primary-color-dark: #303f9f;
+
 $accent-color: #ff4081;
+$accent-color-light: #ff79b0;
+$accent-color-dark: #c60055;
+
 $warn-color: #f44336;
+$warn-color-light: #ff6b60;
+$warn-color-dark: #ba000d;
+
 $success-color: #4caf50;
+$success-color-light: #80e27e;
+$success-color-dark: #087f23;
+
 $info-color: #2196f3;
+$info-color-light: #6ec6ff;
+$info-color-dark: #0069c0;
+
 $warning-color: #ff9800;
+$warning-color-light: #ffc947;
+$warning-color-dark: #c66900;
+
+// Color aliases
+$color-primary: $primary-color;
+$color-primary-light: $primary-color-light;
+$color-primary-dark: $primary-color-dark;
+$color-accent: $accent-color;
+$color-accent-light: $accent-color-light;
+$color-accent-dark: $accent-color-dark;
+$color-success: $success-color;
+$color-success-light: $success-color-light;
+$color-success-dark: $success-color-dark;
+$color-info: $info-color;
+$color-info-light: $info-color-light;
+$color-info-dark: $info-color-dark;
+$color-warning: $warning-color;
+$color-warning-light: $warning-color-light;
+$color-warning-dark: $warning-color-dark;
+$color-danger: $warn-color;
+$color-danger-light: $warn-color-light;
+$color-danger-dark: $warn-color-dark;
+
+// Gray Scale
+$color-gray-50: #f9fafb;
+$color-gray-100: #f3f4f6;
+$color-gray-200: #e5e7eb;
+$color-gray-300: #d1d5db;
+$color-gray-400: #9ca3af;
+$color-gray-500: #6b7280;
+$color-gray-600: #4b5563;
+$color-gray-700: #374151;
+$color-gray-800: #1f2937;
+$color-gray-900: #111827;
 
 // Text Colors
 $text-primary: rgba(0, 0, 0, 0.87);
@@ -29,6 +78,7 @@ $spacing-md: $spacing-unit * 2; // 16px
 $spacing-lg: $spacing-unit * 3; // 24px
 $spacing-xl: $spacing-unit * 4; // 32px
 $spacing-xxl: $spacing-unit * 6; // 48px
+$spacing-2xl: $spacing-xxl; // 48px (alias)
 
 // Border Radius
 $border-radius-sm: 4px;
@@ -49,9 +99,11 @@ $font-family-monospace: 'Roboto Mono', monospace;
 $font-size-xs: 0.75rem; // 12px
 $font-size-sm: 0.875rem; // 14px
 $font-size-base: 1rem; // 16px
+$font-size-md: $font-size-base; // 16px (alias for base)
 $font-size-lg: 1.125rem; // 18px
 $font-size-xl: 1.25rem; // 20px
 $font-size-xxl: 1.5rem; // 24px
+$font-size-2xl: 1.5rem; // 24px (alias for xxl)
 $font-size-xxxl: 2rem; // 32px
 
 $font-weight-light: 300;

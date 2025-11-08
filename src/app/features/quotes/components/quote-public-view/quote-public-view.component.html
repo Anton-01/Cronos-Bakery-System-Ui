@@ -1,0 +1,63 @@
+<div class="public-quote-container">
+  @if (loading) {
+    <mat-card>
+      <mat-card-content>
+        <p>Cargando cotización...</p>
+      </mat-card-content>
+    </mat-card>
+  } @else if (quote) {
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <h1>Cotización #{{ quote.quoteNumber }}</h1>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="quote-info">
+          <p><strong>Cliente:</strong> {{ quote.clientName }}</p>
+          <p><strong>Email:</strong> {{ quote.clientEmail }}</p>
+          <p><strong>Fecha:</strong> {{ quote.createdAt | date: 'dd/MM/yyyy' }}</p>
+          <p><strong>Total:</strong> ${{ quote.total | number: '1.2-2' }}</p>
+        </div>
+        <!-- Lista de items de la cotización -->
+        @if (quote.items && quote.items.length > 0) {
+          <div class="quote-items">
+            <h3>Items</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Precio Unitario</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of quote.items; track item.id) {
+                  <tr>
+                    <td>{{ item.recipe.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.unitPrice | number: '1.2-2' }}</td>
+                    <td>${{ item.subtotal | number: '1.2-2' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="downloadPdf()">
+          <mat-icon>download</mat-icon>
+          Descargar PDF
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  } @else {
+    <mat-card>
+      <mat-card-content>
+        <p>Cotización no encontrada</p>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

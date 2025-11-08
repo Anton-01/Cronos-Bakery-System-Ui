@@ -132,10 +132,10 @@ export class UserProfileComponent implements OnInit {
       next: profile => {
         this.profile = profile;
         this.profileForm.patchValue({
-          firstName: profile.firstName,
-          lastName: profile.lastName,
+          firstName: profile.personalData.firstName,
+          lastName: profile.personalData.lastName,
           email: profile.email,
-          phone: profile.phone || '',
+          phone: profile.personalData.phoneNumber || '',
         });
         this.loading = false;
       },
