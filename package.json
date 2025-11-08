@@ -54,6 +54,7 @@
     "ng2-charts": "^8.0.0",
     "ngx-spinner": "^19.0.0",
     "ngx-toastr": "^19.1.0",
+    "primeng": "^18.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -68,6 +69,7 @@
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^8.46.3",
     "@typescript-eslint/parser": "^8.46.3",
+    "cross-env": "^10.1.0",
     "eslint": "^9.39.1",
     "husky": "^9.1.7",
     "jasmine-core": "~5.9.0",

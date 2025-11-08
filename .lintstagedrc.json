@@ -1,5 +1,5 @@
 {
-  "*.ts": ["eslint --fix", "prettier --write"],
+  "*.ts": ["cross-env ESLINT_USE_FLAT_CONFIG=false eslint --fix", "prettier --write"],
   "*.html": ["prettier --write"],
   "*.scss": ["prettier --write"],
   "*.json": ["prettier --write"]
