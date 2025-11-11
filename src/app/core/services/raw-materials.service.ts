@@ -14,9 +14,11 @@ import {
   UpdateUnitRequest,
   UnitConversion,
   CreateConversionRequest,
-  Allergen,
-} from '../../shared/models/raw-material.model';
+  Allergen, ApiResponse
+} from '../../shared/models';
 import { PageResponse } from '../../shared/models/common.model';
+import { CategoryApiResponse } from '../../shared/models';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -30,17 +32,10 @@ export class RawMaterialsService {
   /**
    * Get paginated list of raw materials with optional filters
    */
-  getRawMaterials(
-    page: number = 0,
-    size: number = 10,
-    sort?: string,
-    filters?: {
-      name?: string;
-      categoryId?: number;
-      isActive?: boolean;
-      allergenIds?: number[];
+  getRawMaterials(page: number = 0, size: number = 10, sort?: string, filters?: {
+      name?: string; categoryId?: number; isActive?: boolean; allergenIds?: number[];
     }
-  ): Observable<PageResponse<RawMaterial>> {
+    ): Observable<PageResponse<RawMaterial>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
@@ -67,7 +62,11 @@ export class RawMaterialsService {
       });
     }
 
-    return this.http.get<PageResponse<RawMaterial>>(this.apiUrl, { params });
+    return this.http.get<ApiResponse<PageResponse<RawMaterial>>>(this.apiUrl, { params })
+      .pipe(map(response => {
+          return response.data;
+        })
+      );
   }
 
   /**
@@ -118,17 +117,17 @@ export class RawMaterialsService {
    * Get all categories
    */
   getCategories(): Observable<RawMaterialCategory[]> {
-    return this.http.get<RawMaterialCategory[]>(`${environment.apiUrl}/categories`);
+    return this.http.get<CategoryApiResponse>(`${environment.apiUrl}/categories`)
+      .pipe(map(response => {
+          return response.data;
+        })
+      );
   }
 
   /**
    * Get paginated categories
    */
-  getCategoriesPaginated(
-    page: number = 0,
-    size: number = 10,
-    sort?: string
-  ): Observable<PageResponse<RawMaterialCategory>> {
+  getCategoriesPaginated(page: number = 0, size: number = 10, sort?: string): Observable<PageResponse<RawMaterialCategory>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());

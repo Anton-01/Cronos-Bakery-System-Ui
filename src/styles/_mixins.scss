@@ -1,4 +1,5 @@
-@import 'variables';
+@use 'sass:color';
+@use 'variables';
 
 // Flexbox mixins
 @mixin flex-center {
@@ -21,23 +22,23 @@
 // Responsive breakpoints
 @mixin respond-to($breakpoint) {
   @if $breakpoint == xs {
-    @media (max-width: #{$breakpoint-sm - 1}) {
+    @media (max-width: #{variables.$breakpoint-sm - 1}) {
       @content;
     }
   } @else if $breakpoint == sm {
-    @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-md - 1}) {
+    @media (min-width: #{variables.$breakpoint-sm}) and (max-width: #{variables.$breakpoint-md - 1}) {
       @content;
     }
   } @else if $breakpoint == md {
-    @media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-lg - 1}) {
+    @media (min-width: #{variables.$breakpoint-md}) and (max-width: #{variables.$breakpoint-lg - 1}) {
       @content;
     }
   } @else if $breakpoint == lg {
-    @media (min-width: #{$breakpoint-lg}) and (max-width: #{$breakpoint-xl - 1}) {
+    @media (min-width: #{variables.$breakpoint-lg}) and (max-width: #{variables.$breakpoint-xl - 1}) {
       @content;
     }
   } @else if $breakpoint == xl {
-    @media (min-width: #{$breakpoint-xl}) {
+    @media (min-width: #{variables.$breakpoint-xl}) {
       @content;
     }
   }
@@ -57,13 +58,13 @@
 
 // Card styles
 @mixin card {
-  background: $card-background;
-  border-radius: $border-radius-md;
-  box-shadow: $shadow-sm;
-  padding: $spacing-md;
+  background: variables.$card-background;
+  border-radius: variables.$border-radius-md;
+  box-shadow: variables.$shadow-sm;
+  padding: variables.$spacing-md;
 
   &:hover {
-    box-shadow: $shadow-md;
+    box-shadow: variables.$shadow-md;
   }
 }
 
@@ -107,17 +108,17 @@
 
   &::-webkit-scrollbar-thumb {
     background: $thumb-color;
-    border-radius: $border-radius-sm;
+    border-radius: variables.$border-radius-sm;
 
     &:hover {
-      background: darken($thumb-color, 10%);
+      background: linear-gradient(135deg, variables.$warn-color 0%, color.adjust(variables.$warn-color, $lightness: -15%) 100%);;
     }
   }
 }
 
 // Transitions
 @mixin transition($property: all) {
-  transition: $property $transition-duration-base $transition-timing;
+  transition: $property variables.$transition-duration-base variables.$transition-timing;
 }
 
 // Absolute positioning
@@ -141,13 +142,13 @@
 // Box shadow
 @mixin box-shadow($level: 1) {
   @if $level == 1 {
-    box-shadow: $shadow-sm;
+    box-shadow: variables.$shadow-sm;
   } @else if $level == 2 {
-    box-shadow: $shadow-md;
+    box-shadow: variables.$shadow-md;
   } @else if $level == 3 {
-    box-shadow: $shadow-lg;
+    box-shadow: variables.$shadow-lg;
   } @else if $level == 4 {
-    box-shadow: $shadow-xl;
+    box-shadow: variables.$shadow-xl;
   }
 }
 

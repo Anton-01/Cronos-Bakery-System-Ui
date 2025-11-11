@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 
 import { QuotesService } from '../../../../core/services/quotes.service';
-import { Quote } from '../../../../shared/models/quote.model';
+import { Quote } from '../../../../shared/models';
 
 @Component({
   selector: 'app-quote-public-view',

@@ -9,7 +9,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { ProfileService } from '../../../../core/services/profile.service';
 import { NotificationService } from '../../../../core/services/notification.service';
-import { UserProfile } from '../../../../shared/models/profile.model';
+import { UserProfile } from '../../../../shared/models';
 
 @Component({
   selector: 'app-user-profile',

@@ -1,13 +1,14 @@
-@import '../../../../../styles/variables';
+@use 'sass:color';
+@use '../../../../../styles/variables';
 
 .raw-materials-list-container {
-  padding: $spacing-lg;
+  padding: variables.$spacing-lg;
   max-width: 1400px;
   margin: 0 auto;
 }
 
 .filter-card {
-  margin-bottom: $spacing-lg;
+  margin-bottom: variables.$spacing-lg;
 }
 
 .header-content {
@@ -15,11 +16,11 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: $spacing-md 0;
+  padding: variables.$spacing-md 0;
 
   h1 {
     margin: 0;
-    font-size: $font-size-2xl;
+    font-size: variables.$font-size-2xl;
     font-weight: 600;
   }
 }
@@ -27,8 +28,8 @@
 .filter-form {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: $spacing-md;
-  margin-top: $spacing-md;
+  gap: variables.$spacing-md;
+  margin-top: variables.$spacing-md;
 
   mat-form-field {
     width: 100%;
@@ -41,12 +42,12 @@
 }
 
 .table-card {
-  margin-bottom: $spacing-lg;
+  margin-bottom: variables.$spacing-lg;
 }
 
 .table-container {
   overflow-x: auto;
-  margin-top: $spacing-md;
+  margin-top: variables.$spacing-md;
 }
 
 .materials-table {
@@ -54,56 +55,56 @@
   background: white;
 
   th {
-    background-color: $color-gray-50;
+    background-color: variables.$color-gray-50;
     font-weight: 600;
-    font-size: $font-size-sm;
+    font-size: variables.$font-size-sm;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
   td {
-    padding: $spacing-md;
+    padding: variables.$spacing-md;
   }
 
   tr:hover {
-    background-color: $color-gray-50;
+    background-color: variables.$color-gray-50;
   }
 }
 
 .material-name {
   strong {
     display: block;
-    margin-bottom: $spacing-xs;
+    margin-bottom: variables.$spacing-xs;
   }
 
   .allergens {
     display: flex;
     flex-wrap: wrap;
-    gap: $spacing-xs;
-    margin-top: $spacing-xs;
+    gap: variables.$spacing-xs;
+    margin-top: variables.$spacing-xs;
   }
 
   .allergen-chip {
-    font-size: $font-size-xs;
+    font-size: variables.$font-size-xs;
     height: 20px;
-    padding: 0 $spacing-xs;
-    background-color: $color-warning-light;
-    color: $color-warning-dark;
+    padding: 0 variables.$spacing-xs;
+    background-color: variables.$color-warning-light;
+    color: variables.$color-warning-dark;
   }
 }
 
 .stock-info {
   display: flex;
   align-items: center;
-  gap: $spacing-xs;
+  gap: variables.$spacing-xs;
 
   .low-stock {
-    color: $color-danger;
+    color: variables.$color-danger;
     font-weight: 600;
   }
 
   .warning-icon {
-    color: $color-warning;
+    color: variables.$color-warning;
     font-size: 20px;
     width: 20px;
     height: 20px;
@@ -112,13 +113,13 @@
 
 mat-chip {
   &.active {
-    background-color: $color-success-light;
-    color: $color-success-dark;
+    background-color: variables.$color-success-light;
+    color: variables.$color-success-dark;
   }
 
   &.inactive {
-    background-color: $color-gray-200;
-    color: $color-gray-700;
+    background-color: variables.$color-gray-200;
+    color: variables.$color-gray-700;
   }
 }
 
@@ -126,19 +127,19 @@ mat-chip {
 .loading-container,
 .no-data-container {
   text-align: center;
-  padding: $spacing-2xl;
+  padding: variables.$spacing-2xl;
 
   mat-icon {
     font-size: 48px;
     width: 48px;
     height: 48px;
-    color: $color-gray-400;
-    margin-bottom: $spacing-md;
+    color: variables.$color-gray-400;
+    margin-bottom: variables.$spacing-md;
   }
 
   p {
-    color: $color-gray-600;
-    font-size: $font-size-md;
+    color: variables.$color-gray-600;
+    font-size: variables.$font-size-md;
   }
 }
 
@@ -156,15 +157,15 @@ mat-chip {
 }
 
 // Responsive design
-@media (max-width: $breakpoint-md) {
+@media (max-width: variables.$breakpoint-md) {
   .raw-materials-list-container {
-    padding: $spacing-md;
+    padding: variables.$spacing-md;
   }
 
   .header-content {
     flex-direction: column;
     align-items: flex-start;
-    gap: $spacing-md;
+    gap: variables.$spacing-md;
 
     button {
       width: 100%;
@@ -188,8 +189,8 @@ mat-chip {
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@media (max-width: variables.$breakpoint-sm) {
   .raw-materials-list-container {
-    padding: $spacing-sm;
+    padding: variables.$spacing-sm;
   }
 }

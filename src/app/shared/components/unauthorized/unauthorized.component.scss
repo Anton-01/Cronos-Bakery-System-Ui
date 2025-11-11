@@ -1,76 +1,77 @@
-@import '../../../../styles/variables';
-@import '../../../../styles/mixins';
+@use 'sass:color';
+@use '../../../../styles/variables';
+@use '../../../../styles/mixins';
 
 .error-container {
-  @include flex-center;
+  @include mixins.flex-center;
   min-height: 100vh;
-  background: linear-gradient(135deg, $warn-color 0%, darken($warn-color, 15%) 100%);
-  padding: $spacing-md;
+  background: linear-gradient(135deg, variables.$warn-color 0%, color.adjust(variables.$warn-color, $lightness: -15%) 100%);
+  padding: variables.$spacing-md;
 }
 
 .error-content {
-  @include flex-column;
-  @include flex-center;
-  gap: $spacing-lg;
+  @include mixins.flex-column;
+  @include mixins.flex-center;
+  gap: variables.$spacing-lg;
   text-align: center;
   max-width: 600px;
   background: white;
-  padding: $spacing-xxl;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-xl;
+  padding: variables.$spacing-xxl;
+  border-radius: variables.$border-radius-lg;
+  box-shadow: variables.$shadow-xl;
 
-  @include respond-to-max($breakpoint-sm) {
-    padding: $spacing-xl;
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
+    padding: variables.$spacing-xl;
   }
 }
 
 .error-icon-container {
-  @include flex-center;
+  @include mixins.flex-center;
   width: 120px;
   height: 120px;
-  border-radius: $border-radius-round;
-  background-color: rgba($warn-color, 0.1);
+  border-radius: variables.$border-radius-round;
+  background-color: rgba(variables.$warn-color, 0.1);
 }
 
 .error-icon {
   font-size: 72px;
   width: 72px;
   height: 72px;
-  color: $warn-color;
+  color: variables.$warn-color;
 }
 
 .error-code {
   margin: 0;
   font-size: 96px;
-  font-weight: $font-weight-bold;
-  color: $warn-color;
+  font-weight: variables.$font-weight-bold;
+  color: variables.$warn-color;
   line-height: 1;
 
-  @include respond-to-max($breakpoint-sm) {
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
     font-size: 72px;
   }
 }
 
 .error-title {
   margin: 0;
-  font-size: $font-size-xxl;
-  font-weight: $font-weight-bold;
-  color: $text-primary;
+  font-size: variables.$font-size-xxl;
+  font-weight: variables.$font-weight-bold;
+  color: variables.$text-primary;
 }
 
 .error-description {
   margin: 0;
-  font-size: $font-size-base;
-  color: $text-secondary;
-  line-height: $line-height-loose;
+  font-size: variables.$font-size-base;
+  color: variables.$text-secondary;
+  line-height: variables.$line-height-loose;
 }
 
 .error-actions {
-  @include flex-center;
-  gap: $spacing-md;
-  margin-top: $spacing-lg;
+  @include mixins.flex-center;
+  gap: variables.$spacing-md;
+  margin-top: variables.$spacing-lg;
 
-  @include respond-to-max($breakpoint-sm) {
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
     flex-direction: column;
     width: 100%;
 
@@ -81,35 +82,35 @@
 }
 
 .primary-action {
-  @include flex-center;
-  gap: $spacing-xs;
+  @include mixins.flex-center;
+  gap: variables.$spacing-xs;
 }
 
 .secondary-action {
-  @include flex-center;
-  gap: $spacing-xs;
+  @include mixins.flex-center;
+  gap: variables.$spacing-xs;
 
   &:hover {
-    background-color: rgba($warn-color, 0.1);
+    background-color: rgba(variables.$warn-color, 0.1);
   }
 }
 
 .error-help {
-  @include flex-center;
-  gap: $spacing-md;
-  margin-top: $spacing-xl;
-  padding: $spacing-md;
-  background-color: rgba($info-color, 0.1);
-  border-radius: $border-radius-md;
-  border-left: 4px solid $info-color;
+  @include mixins.flex-center;
+  gap: variables.$spacing-md;
+  margin-top: variables.$spacing-xl;
+  padding: variables.$spacing-md;
+  background-color: rgba(variables.$info-color, 0.1);
+  border-radius: variables.$border-radius-md;
+  border-left: 4px solid variables.$info-color;
 
-  @include respond-to-max($breakpoint-sm) {
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
     flex-direction: column;
   }
 }
 
 .help-icon {
-  color: $info-color;
+  color: variables.$info-color;
   font-size: 24px;
   width: 24px;
   height: 24px;
@@ -118,11 +119,11 @@
 
 .help-text {
   margin: 0;
-  font-size: $font-size-sm;
-  color: $text-secondary;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
   text-align: left;
 
-  @include respond-to-max($breakpoint-sm) {
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
     text-align: center;
   }
 }

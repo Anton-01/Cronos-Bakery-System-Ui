@@ -13,6 +13,7 @@ import { ThemeService } from './core/services/theme.service';
 export class App implements OnInit {
   title = 'Cronos Bakery System';
 
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private themeService: ThemeService) {}
 
   ngOnInit(): void {

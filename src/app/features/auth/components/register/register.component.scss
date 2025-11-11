@@ -1,11 +1,12 @@
-@import '../../../../../styles/variables';
-@import '../../../../../styles/mixins';
+@use 'sass:color';
+@use '../../../../../styles/variables';
+@use '../../../../../styles/mixins';
 
 .auth-container {
-  @include flex-center;
+  @include mixins.flex-center;
   min-height: 100vh;
-  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 15%) 100%);
-  padding: $spacing-md;
+  background: linear-gradient(135deg, variables.$primary-color 0%, color.adjust(variables.$primary-color, $lightness: -15%) 100%);
+  padding: variables.$spacing-md;
 }
 
 .auth-card-wrapper {
@@ -14,51 +15,51 @@
 }
 
 .auth-card {
-  padding: $spacing-xl;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-xl;
+  padding: variables.$spacing-xl;
+  border-radius: variables.$border-radius-lg;
+  box-shadow: variables.$shadow-xl;
 
-  @include respond-to-max($breakpoint-sm) {
-    padding: $spacing-lg;
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
+    padding: variables.$spacing-lg;
   }
 }
 
 .auth-header {
   text-align: center;
-  margin-bottom: $spacing-lg;
+  margin-bottom: variables.$spacing-lg;
   padding: 0;
 }
 
 .auth-logo {
-  @include flex-column;
-  @include flex-center;
-  gap: $spacing-sm;
-  margin-bottom: $spacing-md;
+  @include mixins.flex-column;
+  @include mixins.flex-center;
+  gap: variables.$spacing-sm;
+  margin-bottom: variables.$spacing-md;
 }
 
 .logo-icon {
   font-size: 64px;
   width: 64px;
   height: 64px;
-  color: $primary-color;
+  color: variables.$primary-color;
 }
 
 .auth-title {
   margin: 0;
-  font-size: $font-size-xxl;
-  font-weight: $font-weight-bold;
-  color: $primary-color;
+  font-size: variables.$font-size-xxl;
+  font-weight: variables.$font-weight-bold;
+  color: variables.$primary-color;
 }
 
 .auth-subtitle {
   margin: 0;
-  font-size: $font-size-base;
-  color: $text-secondary;
+  font-size: variables.$font-size-base;
+  color: variables.$text-secondary;
 }
 
 .auth-form {
-  @include flex-column;
-  gap: $spacing-md;
+  @include mixins.flex-column;
+  gap: variables.$spacing-md;
 }
 
 .full-width {
@@ -67,12 +68,12 @@
 
 .form-row {
   display: flex;
-  gap: $spacing-md;
+  gap: variables.$spacing-md;
   width: 100%;
 
-  @include respond-to-max($breakpoint-sm) {
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
     flex-direction: column;
-    gap: $spacing-md;
+    gap: variables.$spacing-md;
   }
 }
 
@@ -81,36 +82,36 @@
 }
 
 .terms-checkbox {
-  margin: $spacing-sm 0;
+  margin: variables.$spacing-sm 0;
 
   mat-checkbox {
-    font-size: $font-size-sm;
+    font-size: variables.$font-size-sm;
   }
 }
 
 .terms-link {
-  color: $primary-color;
+  color: variables.$primary-color;
   text-decoration: none;
-  transition: color $transition-duration-fast;
+  transition: color variables.$transition-duration-fast;
 
   &:hover {
-    color: darken($primary-color, 10%);
+    color: color.adjust(variables.$primary-color, $lightness: -10%);
     text-decoration: underline;
   }
 }
 
 .terms-error {
-  color: $warn-color;
-  font-size: $font-size-xs;
-  margin-top: $spacing-xs;
+  color: variables.$warn-color;
+  font-size: variables.$font-size-xs;
+  margin-top: variables.$spacing-xs;
   display: block;
 }
 
 .submit-button {
   height: 48px;
-  font-size: $font-size-base;
-  font-weight: $font-weight-medium;
-  margin-top: $spacing-md;
+  font-size: variables.$font-size-base;
+  font-weight: variables.$font-weight-medium;
+  margin-top: variables.$spacing-md;
   position: relative;
 }
 
@@ -124,23 +125,23 @@
 
 .auth-footer {
   text-align: center;
-  margin-top: $spacing-md;
+  margin-top: variables.$spacing-md;
 }
 
 .login-text {
   margin: 0;
-  font-size: $font-size-sm;
-  color: $text-secondary;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
 }
 
 .login-link {
-  color: $primary-color;
+  color: variables.$primary-color;
   text-decoration: none;
-  font-weight: $font-weight-medium;
-  transition: color $transition-duration-fast;
+  font-weight: variables.$font-weight-medium;
+  transition: color variables.$transition-duration-fast;
 
   &:hover {
-    color: darken($primary-color, 10%);
+    color: color.adjust(variables.$primary-color, $lightness: -10%);
     text-decoration: underline;
   }
 }
@@ -155,7 +156,7 @@
 
       .mat-mdc-form-field-icon-prefix,
       .mat-mdc-form-field-icon-suffix {
-        color: $text-secondary;
+        color: variables.$text-secondary;
       }
     }
   }

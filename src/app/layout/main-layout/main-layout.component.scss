@@ -1,5 +1,5 @@
-@import '../../../styles/variables';
-@import '../../../styles/mixins';
+@use '../../../styles/variables';
+@use '../../../styles/mixins';
 
 .main-layout {
   display: flex;
@@ -16,21 +16,21 @@
 .main-content {
   flex: 1;
   overflow-y: auto;
-  padding: $spacing-lg;
-  background-color: $background-color;
-  transition: margin-left $transition-duration-base $transition-timing;
+  padding: variables.$spacing-lg;
+  background-color: variables.$background-color;
+  transition: margin-left variables.$transition-duration-base variables.$transition-timing;
 
-  @include respond-to-max($breakpoint-md) {
-    padding: $spacing-md;
+  @include mixins.respond-to-max(variables.$breakpoint-md) {
+    padding: variables.$spacing-md;
   }
 
-  @include custom-scrollbar;
+  @include mixins.custom-scrollbar;
 }
 
 .sidebar-open .main-content {
-  margin-left: $sidebar-width;
+  margin-left: variables.$sidebar-width;
 
-  @include respond-to-max($breakpoint-md) {
+  @include mixins.respond-to-max(variables.$breakpoint-md) {
     margin-left: 0;
   }
 }

@@ -1,52 +1,52 @@
-@import '../../../styles/variables';
-@import '../../../styles/mixins';
+@use '../../../styles/variables';
+@use '../../../styles/mixins';
 
 .footer {
-  height: $footer-height;
-  background-color: $card-background;
-  border-top: 1px solid $border-color;
-  box-shadow: $shadow-sm;
+  height: variables.$footer-height;
+  background-color: variables.$card-background;
+  border-top: 1px solid variables.$border-color;
+  box-shadow: variables.$shadow-sm;
   margin-top: auto;
 }
 
 .footer-content {
-  @include flex-between;
+  @include mixins.flex-between;
   height: 100%;
-  padding: 0 $spacing-lg;
+  padding: 0 variables.$spacing-lg;
   max-width: 1200px;
   margin: 0 auto;
 
-  @include respond-to-max($breakpoint-sm) {
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
     flex-direction: column;
     justify-content: center;
-    padding: $spacing-sm;
+    padding: variables.$spacing-sm;
   }
 }
 
 .footer-left {
-  @include flex-center;
+  @include mixins.flex-center;
 }
 
 .copyright {
   margin: 0;
-  color: $text-secondary;
-  font-size: $font-size-sm;
+  color: variables.$text-secondary;
+  font-size: variables.$font-size-sm;
 
-  @include respond-to-max($breakpoint-sm) {
-    font-size: $font-size-xs;
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
+    font-size: variables.$font-size-xs;
     text-align: center;
   }
 }
 
 .footer-right {
-  @include flex-center;
-  gap: $spacing-md;
+  @include mixins.flex-center;
+  gap: variables.$spacing-md;
 }
 
 .version {
-  color: $text-disabled;
-  font-size: $font-size-xs;
-  padding: $spacing-xs $spacing-sm;
+  color: variables.$text-disabled;
+  font-size: variables.$font-size-xs;
+  padding: variables.$spacing-xs variables.$spacing-sm;
   background-color: rgba(0, 0, 0, 0.05);
-  border-radius: $border-radius-sm;
+  border-radius: variables.$border-radius-sm;
 }

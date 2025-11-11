@@ -1,11 +1,12 @@
-@import '../../../../../styles/variables';
-@import '../../../../../styles/mixins';
+@use 'sass:color';
+@use '../../../../../styles/variables';
+@use '../../../../../styles/mixins';
 
 .auth-container {
-  @include flex-center;
+  @include mixins.flex-center;
   min-height: 100vh;
-  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 15%) 100%);
-  padding: $spacing-md;
+  background: linear-gradient(135deg, variables.$primary-color 0%, color.adjust(variables.$primary-color, $lightness: -15%) 100%);
+  padding: variables.$spacing-md;
 }
 
 .auth-card-wrapper {
@@ -14,78 +15,78 @@
 }
 
 .auth-card {
-  padding: $spacing-xl;
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-xl;
+  padding: variables.$spacing-xl;
+  border-radius: variables.$border-radius-lg;
+  box-shadow: variables.$shadow-xl;
 
-  @include respond-to-max($breakpoint-sm) {
-    padding: $spacing-lg;
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
+    padding: variables.$spacing-lg;
   }
 }
 
 .auth-header {
   text-align: center;
-  margin-bottom: $spacing-xl;
+  margin-bottom: variables.$spacing-xl;
   padding: 0;
 }
 
 .auth-logo {
-  @include flex-column;
-  @include flex-center;
-  gap: $spacing-sm;
-  margin-bottom: $spacing-md;
+  @include mixins.flex-column;
+  @include mixins.flex-center;
+  gap: variables.$spacing-sm;
+  margin-bottom: variables.$spacing-md;
 }
 
 .logo-icon {
   font-size: 64px;
   width: 64px;
   height: 64px;
-  color: $primary-color;
+  color: variables.$primary-color;
 }
 
 .auth-title {
   margin: 0;
-  font-size: $font-size-xxl;
-  font-weight: $font-weight-bold;
-  color: $primary-color;
+  font-size: variables.$font-size-xxl;
+  font-weight: variables.$font-weight-bold;
+  color: variables.$primary-color;
 }
 
 .auth-subtitle {
   margin: 0;
-  font-size: $font-size-base;
-  color: $text-secondary;
+  font-size: variables.$font-size-base;
+  color: variables.$text-secondary;
 }
 
 .qr-section {
-  @include flex-column;
-  @include flex-center;
-  gap: $spacing-md;
-  margin-bottom: $spacing-xl;
-  padding: $spacing-lg;
-  background-color: rgba($primary-color, 0.05);
-  border-radius: $border-radius-md;
-  border: 2px dashed rgba($primary-color, 0.3);
+  @include mixins.flex-column;
+  @include mixins.flex-center;
+  gap: variables.$spacing-md;
+  margin-bottom: variables.$spacing-xl;
+  padding: variables.$spacing-lg;
+  background-color: rgba(variables.$primary-color, 0.05);
+  border-radius: variables.$border-radius-md;
+  border: 2px dashed rgba(variables.$primary-color, 0.3);
 }
 
 .qr-code-container {
-  @include flex-center;
-  padding: $spacing-md;
+  @include mixins.flex-center;
+  padding: variables.$spacing-md;
   background: white;
-  border-radius: $border-radius-md;
-  box-shadow: $shadow-sm;
+  border-radius: variables.$border-radius-md;
+  box-shadow: variables.$shadow-sm;
 }
 
 .qr-instructions {
   margin: 0;
   text-align: center;
-  font-size: $font-size-sm;
-  color: $text-secondary;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
   max-width: 300px;
 }
 
 .auth-form {
-  @include flex-column;
-  gap: $spacing-md;
+  @include mixins.flex-column;
+  gap: variables.$spacing-md;
 }
 
 .full-width {
@@ -93,40 +94,40 @@
 }
 
 .code-input {
-  font-size: $font-size-xl;
-  font-weight: $font-weight-medium;
+  font-size: variables.$font-size-xl;
+  font-weight: variables.$font-weight-medium;
   letter-spacing: 0.5em;
   text-align: center;
-  font-family: $font-family-monospace;
+  font-family: variables.$font-family-monospace;
 }
 
 .qr-toggle-section {
   text-align: center;
-  margin: $spacing-sm 0;
+  margin: variables.$spacing-sm 0;
 }
 
 .qr-toggle-button {
-  @include flex-center;
-  gap: $spacing-xs;
+  @include mixins.flex-center;
+  gap: variables.$spacing-xs;
 }
 
 .info-box {
-  @include flex-center;
-  gap: $spacing-md;
-  padding: $spacing-md;
-  background-color: rgba($info-color, 0.1);
-  border-left: 4px solid $info-color;
-  border-radius: $border-radius-sm;
-  margin: $spacing-md 0;
+  @include mixins.flex-center;
+  gap: variables.$spacing-md;
+  padding: variables.$spacing-md;
+  background-color: rgba(variables.$info-color, 0.1);
+  border-left: 4px solid variables.$info-color;
+  border-radius: variables.$border-radius-sm;
+  margin: variables.$spacing-md 0;
 
-  @include respond-to-max($breakpoint-sm) {
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
     flex-direction: column;
     align-items: flex-start;
   }
 }
 
 .info-icon {
-  color: $info-color;
+  color: variables.$info-color;
   font-size: 32px;
   width: 32px;
   height: 32px;
@@ -138,24 +139,24 @@
 }
 
 .info-title {
-  margin: 0 0 $spacing-xs 0;
-  font-weight: $font-weight-medium;
-  font-size: $font-size-base;
-  color: $text-primary;
+  margin: 0 0 variables.$spacing-xs 0;
+  font-weight: variables.$font-weight-medium;
+  font-size: variables.$font-size-base;
+  color: variables.$text-primary;
 }
 
 .info-text {
   margin: 0;
-  font-size: $font-size-sm;
-  color: $text-secondary;
-  line-height: $line-height-base;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  line-height: variables.$line-height-base;
 }
 
 .submit-button {
   height: 48px;
-  font-size: $font-size-base;
-  font-weight: $font-weight-medium;
-  margin-top: $spacing-md;
+  font-size: variables.$font-size-base;
+  font-weight: variables.$font-weight-medium;
+  margin-top: variables.$spacing-md;
   position: relative;
 }
 
@@ -169,16 +170,16 @@
 
 .auth-footer {
   text-align: center;
-  margin-top: $spacing-lg;
+  margin-top: variables.$spacing-lg;
 }
 
 .back-button {
-  @include flex-center;
-  gap: $spacing-xs;
-  color: $text-secondary;
+  @include mixins.flex-center;
+  gap: variables.$spacing-xs;
+  color: variables.$text-secondary;
 
   &:hover {
-    color: $primary-color;
+    color: variables.$primary-color;
   }
 }
 
@@ -191,7 +192,7 @@
       }
 
       .mat-mdc-form-field-icon-prefix {
-        color: $text-secondary;
+        color: variables.$text-secondary;
       }
     }
   }

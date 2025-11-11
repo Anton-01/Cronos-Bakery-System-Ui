@@ -4,10 +4,10 @@
 @use '@angular/material' as mat;
 
 // Import custom styles
-@import 'styles/variables';
-@import 'styles/mixins';
-@import 'styles/typography';
-@import 'styles/utilities';
+@use 'styles/variables';
+@use 'styles/mixins';
+@use 'styles/typography';
+@use 'styles/utilities';
 
 // Include Angular Material core styles
 @include mat.core();
@@ -46,11 +46,11 @@ body {
 }
 
 body {
-  font-family: $font-family-base;
-  font-size: $font-size-base;
-  line-height: $line-height-base;
-  color: $text-primary;
-  background-color: $background-color;
+  font-family: variables.$font-family-base;
+  font-size: variables.$font-size-base;
+  line-height: variables.$line-height-base;
+  color: variables.$text-primary;
+  background-color: variables.$background-color;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -60,50 +60,50 @@ body {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 $spacing-md;
+  padding: 0 variables.$spacing-md;
 
-  @include respond-to-min($breakpoint-lg) {
-    padding: 0 $spacing-lg;
+  @include mixins.respond-to-min(variables.$breakpoint-lg) {
+    padding: 0 variables.$spacing-lg;
   }
 }
 
 .container-fluid {
   width: 100%;
-  padding: 0 $spacing-md;
+  padding: 0 variables.$spacing-md;
 }
 
 // Card component
 .card {
-  @include card;
+  @include mixins.card;
 }
 
 // Page wrapper
 .page-wrapper {
-  min-height: calc(100vh - #{$header-height} - #{$footer-height});
-  padding: $spacing-lg;
+  min-height: calc(100vh - #{variables.$header-height} - #{variables.$footer-height});
+  padding: variables.$spacing-lg;
 
-  @include respond-to-max($breakpoint-sm) {
-    padding: $spacing-md;
+  @include mixins.respond-to-max(variables.$breakpoint-sm) {
+    padding: variables.$spacing-md;
   }
 }
 
 // Form elements global styles
 .form-field {
-  margin-bottom: $spacing-md;
+  margin-bottom: variables.$spacing-md;
 }
 
 .error-message {
-  color: $warn-color;
-  font-size: $font-size-sm;
-  margin-top: $spacing-xs;
+  color: variables.$warn-color;
+  font-size: variables.$font-size-sm;
+  margin-top: variables.$spacing-xs;
 }
 
 // Loading overlay
 .loading-overlay {
-  @include absolute-fill;
-  @include flex-center;
+  @include mixins.absolute-fill;
+  @include mixins.flex-center;
   background-color: rgba(255, 255, 255, 0.8);
-  z-index: $z-index-modal;
+  z-index: variables.$z-index-modal;
 }
 
 // Custom scrollbar
@@ -118,7 +118,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.3);
-  border-radius: $border-radius-sm;
+  border-radius: variables.$border-radius-sm;
 
   &:hover {
     background: rgba(0, 0, 0, 0.4);

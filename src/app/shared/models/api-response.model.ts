@@ -1,3 +1,5 @@
+import { RawMaterialCategory } from './raw-material.model';
+
 /**
  * Generic API Response wrapper
  */
@@ -26,3 +28,5 @@ export interface FieldError {
   field: string;
   message: string;
 }
+
+export type CategoryApiResponse = ApiResponse<RawMaterialCategory[]>

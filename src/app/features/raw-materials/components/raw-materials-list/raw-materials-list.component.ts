@@ -18,7 +18,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { RawMaterialsService } from '../../../../core/services/raw-materials.service';
 import { NotificationService } from '../../../../core/services/notification.service';
-import { RawMaterial, RawMaterialCategory } from '../../../../shared/models/raw-material.model';
+import { RawMaterial, RawMaterialCategory } from '../../../../shared/models';
 
 @Component({
   selector: 'app-raw-materials-list',
@@ -43,6 +43,7 @@ import { RawMaterial, RawMaterialCategory } from '../../../../shared/models/raw-
   templateUrl: './raw-materials-list.component.html',
   styleUrl: './raw-materials-list.component.scss',
 })
+
 export class RawMaterialsListComponent implements OnInit {
   private readonly rawMaterialsService = inject(RawMaterialsService);
   private readonly notificationService = inject(NotificationService);
@@ -98,6 +99,7 @@ export class RawMaterialsListComponent implements OnInit {
       },
       error: error => {
         this.notificationService.showError('Error al cargar categorías');
+        this.categories = [];
         console.error('Error loading categories:', error);
       },
     });
@@ -116,9 +118,7 @@ export class RawMaterialsListComponent implements OnInit {
       ? `${this.sort.active},${this.sort.direction}`
       : 'name,asc';
 
-    this.rawMaterialsService
-      .getRawMaterials(this.pageIndex, this.pageSize, sort, filters)
-      .subscribe({
+    this.rawMaterialsService.getRawMaterials(this.pageIndex, this.pageSize, sort, filters).subscribe({
         next: response => {
           this.dataSource.data = response.content;
           this.totalElements = response.totalElements;

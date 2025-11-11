@@ -1,8 +1,9 @@
-@import 'variables';
-@import 'mixins';
+@use 'sass:color';
+@use 'variables';
+@use 'mixins';
 
 // Spacing utilities (margin and padding)
-@each $size, $value in (xs: $spacing-xs, sm: $spacing-sm, md: $spacing-md, lg: $spacing-lg, xl: $spacing-xl, xxl: $spacing-xxl) {
+@each $size, $value in (xs: variables.$spacing-xs, sm: variables.$spacing-sm, md: variables.$spacing-md, lg: variables.$spacing-lg, xl: variables.$spacing-xl, xxl: variables.$spacing-xxl) {
   // Margin
   .m-#{$size} {
     margin: $value !important;
@@ -242,23 +243,23 @@
 
 // Border utilities
 .border {
-  border: 1px solid $border-color !important;
+  border: 1px solid variables.$border-color !important;
 }
 
 .border-top {
-  border-top: 1px solid $border-color !important;
+  border-top: 1px solid variables.$border-color !important;
 }
 
 .border-right {
-  border-right: 1px solid $border-color !important;
+  border-right: 1px solid variables.$border-color !important;
 }
 
 .border-bottom {
-  border-bottom: 1px solid $border-color !important;
+  border-bottom: 1px solid variables.$border-color !important;
 }
 
 .border-left {
-  border-left: 1px solid $border-color !important;
+  border-left: 1px solid variables.$border-color !important;
 }
 
 .border-0 {
@@ -267,19 +268,19 @@
 
 // Border radius
 .rounded {
-  border-radius: $border-radius-md !important;
+  border-radius: variables.$border-radius-md !important;
 }
 
 .rounded-sm {
-  border-radius: $border-radius-sm !important;
+  border-radius: variables.$border-radius-sm !important;
 }
 
 .rounded-lg {
-  border-radius: $border-radius-lg !important;
+  border-radius: variables.$border-radius-lg !important;
 }
 
 .rounded-circle {
-  border-radius: $border-radius-round !important;
+  border-radius: variables.$border-radius-round !important;
 }
 
 .rounded-0 {
@@ -288,19 +289,19 @@
 
 // Shadow utilities
 .shadow-sm {
-  box-shadow: $shadow-sm !important;
+  box-shadow: variables.$shadow-sm !important;
 }
 
 .shadow {
-  box-shadow: $shadow-md !important;
+  box-shadow: variables.$shadow-md !important;
 }
 
 .shadow-lg {
-  box-shadow: $shadow-lg !important;
+  box-shadow: variables.$shadow-lg !important;
 }
 
 .shadow-xl {
-  box-shadow: $shadow-xl !important;
+  box-shadow: variables.$shadow-xl !important;
 }
 
 .shadow-none {
@@ -356,21 +357,21 @@
 
 // Gap utilities (for flex and grid)
 .gap-xs {
-  gap: $spacing-xs !important;
+  gap: variables.$spacing-xs !important;
 }
 
 .gap-sm {
-  gap: $spacing-sm !important;
+  gap: variables.$spacing-sm !important;
 }
 
 .gap-md {
-  gap: $spacing-md !important;
+  gap: variables.$spacing-md !important;
 }
 
 .gap-lg {
-  gap: $spacing-lg !important;
+  gap: variables.$spacing-lg !important;
 }
 
 .gap-xl {
-  gap: $spacing-xl !important;
+  gap: variables.$spacing-xl !important;
 }
