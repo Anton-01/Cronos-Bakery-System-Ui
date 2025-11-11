@@ -19,6 +19,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { RawMaterialsService } from '../../../../core/services/raw-materials.service';
 import { NotificationService } from '../../../../core/services/notification.service';
 import { RawMaterial, RawMaterialCategory } from '../../../../shared/models';
+import { CategoriesDialogComponent } from '../categories-dialog/categories-dialog.component';
 
 @Component({
   selector: 'app-raw-materials-list',
@@ -192,5 +193,19 @@ export class RawMaterialsListComponent implements OnInit {
     if (material.currentStock === 0) return 'Sin stock';
     if (this.isLowStock(material)) return 'Stock bajo';
     return 'Stock normal';
+  }
+
+  openCategoriesDialog(): void {
+    const dialogRef = this.dialog.open(CategoriesDialogComponent, {
+      width: '900px',
+      maxHeight: '80vh',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      // Reload categories after modal is closed
+      if (result) {
+        this.loadCategories();
+      }
+    });
   }
 }

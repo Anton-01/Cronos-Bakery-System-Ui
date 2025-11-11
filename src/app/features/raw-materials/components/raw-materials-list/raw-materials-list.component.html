@@ -4,13 +4,22 @@
       <mat-card-title>
         <div class="header-content">
           <h1>Materias Primas</h1>
-          <button
-            mat-raised-button
-            color="primary"
-            routerLink="/raw-materials/create">
-            <mat-icon>add</mat-icon>
-            Nueva Materia Prima
-          </button>
+          <div class="action-buttons">
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="openCategoriesDialog()">
+              <mat-icon>category</mat-icon>
+              Gestionar Categorías
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              routerLink="/raw-materials/create">
+              <mat-icon>add</mat-icon>
+              Nueva Materia Prima
+            </button>
+          </div>
         </div>
       </mat-card-title>
     </mat-card-header>

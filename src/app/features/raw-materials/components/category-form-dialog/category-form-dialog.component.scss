@@ -1,0 +1,30 @@
+@use '../../../../../styles/abstracts/variables' as *;
+
+:host {
+  display: block;
+}
+
+mat-dialog-content {
+  min-width: 450px;
+  padding: 24px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+}
+
+mat-dialog-actions {
+  padding: 16px 24px;
+  margin: 0;
+}
+
+.button-spinner {
+  display: inline-block;
+  margin-right: 8px;
+}
