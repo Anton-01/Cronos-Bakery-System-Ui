@@ -10,6 +10,8 @@ import {
   BrandingConfig,
   UpdateBrandingRequest,
 } from '../../shared/models/profile.model';
+import { ApiResponse } from '../../shared/models';
+import { extractData } from '../../shared/operators/api-response.operator';
 
 @Injectable({
   providedIn: 'root',
@@ -24,14 +26,16 @@ export class ProfileService {
    * Get current user profile
    */
   getProfile(): Observable<UserProfile> {
-    return this.http.get<UserProfile>(this.apiUrl);
+    return this.http.get<ApiResponse<UserProfile>>(this.apiUrl)
+      .pipe(extractData());
   }
 
   /**
    * Update user profile
    */
   updateProfile(request: UpdateProfileRequest): Observable<UserProfile> {
-    return this.http.put<UserProfile>(this.apiUrl, request);
+    return this.http.put<ApiResponse<UserProfile>>(this.apiUrl, request)
+      .pipe(extractData());
   }
 
   /**
@@ -40,17 +44,18 @@ export class ProfileService {
   uploadProfilePicture(file: File): Observable<{ profilePictureUrl: string }> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<{ profilePictureUrl: string }>(
+    return this.http.post<ApiResponse<{ profilePictureUrl: string }>>(
       `${this.apiUrl}/profile-picture`,
       formData
-    );
+    ).pipe(extractData());
   }
 
   /**
    * Delete profile picture
    */
   deleteProfilePicture(): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/profile-picture`);
+    return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/profile-picture`)
+      .pipe(extractData());
   }
 
   // ==================== Password Management ====================
@@ -59,7 +64,8 @@ export class ProfileService {
    * Change password
    */
   changePassword(request: ChangePasswordRequest): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/change-password`, request);
+    return this.http.post<ApiResponse<void>>(`${this.apiUrl}/change-password`, request)
+      .pipe(extractData());
   }
 
   // ==================== Two-Factor Authentication ====================
@@ -68,31 +74,34 @@ export class ProfileService {
    * Enable 2FA
    */
   enableTwoFactorAuth(): Observable<{ qrCodeUrl: string; secret: string }> {
-    return this.http.post<{ qrCodeUrl: string; secret: string }>(
+    return this.http.post<ApiResponse<{ qrCodeUrl: string; secret: string }>>(
       `${this.apiUrl}/2fa/enable`,
       {}
-    );
+    ).pipe(extractData());
   }
 
   /**
    * Confirm 2FA setup with verification code
    */
   confirmTwoFactorAuth(code: string): Observable<{ backupCodes: string[] }> {
-    return this.http.post<{ backupCodes: string[] }>(`${this.apiUrl}/2fa/confirm`, { code });
+    return this.http.post<ApiResponse<{ backupCodes: string[] }>>(`${this.apiUrl}/2fa/confirm`, { code })
+      .pipe(extractData());
   }
 
   /**
    * Disable 2FA
    */
   disableTwoFactorAuth(password: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/2fa/disable`, { password });
+    return this.http.post<ApiResponse<void>>(`${this.apiUrl}/2fa/disable`, { password })
+      .pipe(extractData());
   }
 
   /**
    * Generate new backup codes
    */
   regenerateBackupCodes(): Observable<{ backupCodes: string[] }> {
-    return this.http.post<{ backupCodes: string[] }>(`${this.apiUrl}/2fa/regenerate-codes`, {});
+    return this.http.post<ApiResponse<{ backupCodes: string[] }>>(`${this.apiUrl}/2fa/regenerate-codes`, {})
+      .pipe(extractData());
   }
 
   // ==================== Sessions ====================
@@ -101,21 +110,24 @@ export class ProfileService {
    * Get active sessions
    */
   getSessions(): Observable<UserSession[]> {
-    return this.http.get<UserSession[]>(`${this.apiUrl}/sessions`);
+    return this.http.get<ApiResponse<UserSession[]>>(`${this.apiUrl}/sessions`)
+      .pipe(extractData());
   }
 
   /**
    * Revoke session
    */
   revokeSession(sessionId: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/sessions/${sessionId}`);
+    return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/sessions/${sessionId}`)
+      .pipe(extractData());
   }
 
   /**
    * Revoke all sessions except current
    */
   revokeAllOtherSessions(): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/sessions/revoke-all-others`, {});
+    return this.http.post<ApiResponse<void>>(`${this.apiUrl}/sessions/revoke-all-others`, {})
+      .pipe(extractData());
   }
 
   // ==================== Branding Configuration ====================
@@ -124,14 +136,16 @@ export class ProfileService {
    * Get branding configuration
    */
   getBrandingConfig(): Observable<BrandingConfig> {
-    return this.http.get<BrandingConfig>(`${environment.apiUrl}/branding`);
+    return this.http.get<ApiResponse<BrandingConfig>>(`${environment.apiUrl}/branding`)
+      .pipe(extractData());
   }
 
   /**
    * Update branding configuration
    */
   updateBrandingConfig(request: UpdateBrandingRequest): Observable<BrandingConfig> {
-    return this.http.put<BrandingConfig>(`${environment.apiUrl}/branding`, request);
+    return this.http.put<ApiResponse<BrandingConfig>>(`${environment.apiUrl}/branding`, request)
+      .pipe(extractData());
   }
 
   /**
@@ -140,21 +154,24 @@ export class ProfileService {
   uploadLogo(file: File): Observable<{ logoUrl: string }> {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post<{ logoUrl: string }>(`${environment.apiUrl}/branding/logo`, formData);
+    return this.http.post<ApiResponse<{ logoUrl: string }>>(`${environment.apiUrl}/branding/logo`, formData)
+      .pipe(extractData());
   }
 
   /**
    * Delete company logo
    */
   deleteLogo(): Observable<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/branding/logo`);
+    return this.http.delete<ApiResponse<void>>(`${environment.apiUrl}/branding/logo`)
+      .pipe(extractData());
   }
 
   /**
    * Reset branding to defaults
    */
   resetBrandingToDefaults(): Observable<BrandingConfig> {
-    return this.http.post<BrandingConfig>(`${environment.apiUrl}/branding/reset`, {});
+    return this.http.post<ApiResponse<BrandingConfig>>(`${environment.apiUrl}/branding/reset`, {})
+      .pipe(extractData());
   }
 
   // ==================== Notifications Preferences ====================
@@ -169,13 +186,13 @@ export class ProfileService {
     expiringQuotesNotifications: boolean;
     weeklyReports: boolean;
   }> {
-    return this.http.get<{
+    return this.http.get<ApiResponse<{
       emailNotifications: boolean;
       quotesNotifications: boolean;
       lowStockNotifications: boolean;
       expiringQuotesNotifications: boolean;
       weeklyReports: boolean;
-    }>(`${this.apiUrl}/notifications`);
+    }>>(`${this.apiUrl}/notifications`).pipe(extractData());
   }
 
   /**
@@ -188,7 +205,8 @@ export class ProfileService {
     expiringQuotesNotifications?: boolean;
     weeklyReports?: boolean;
   }): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/notifications`, preferences);
+    return this.http.put<ApiResponse<void>>(`${this.apiUrl}/notifications`, preferences)
+      .pipe(extractData());
   }
 
   // ==================== Account Management ====================
@@ -197,7 +215,8 @@ export class ProfileService {
    * Delete account
    */
   deleteAccount(password: string): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/delete-account`, { password });
+    return this.http.post<ApiResponse<void>>(`${this.apiUrl}/delete-account`, { password })
+      .pipe(extractData());
   }
 
   /**

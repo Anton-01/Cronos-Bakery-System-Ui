@@ -14,11 +14,11 @@ import {
   UpdateUnitRequest,
   UnitConversion,
   CreateConversionRequest,
-  Allergen, ApiResponse
+  Allergen,
+  ApiResponse
 } from '../../shared/models';
 import { PageResponse } from '../../shared/models/common.model';
-import { CategoryApiResponse } from '../../shared/models';
-import { map } from 'rxjs/operators';
+import { extractData } from '../../shared/operators/api-response.operator';
 
 @Injectable({
   providedIn: 'root',
@@ -63,52 +63,55 @@ export class RawMaterialsService {
     }
 
     return this.http.get<ApiResponse<PageResponse<RawMaterial>>>(this.apiUrl, { params })
-      .pipe(map(response => {
-          return response.data;
-        })
-      );
+      .pipe(extractData());
   }
 
   /**
    * Get raw material by ID
    */
   getRawMaterialById(id: number): Observable<RawMaterial> {
-    return this.http.get<RawMaterial>(`${this.apiUrl}/${id}`);
+    return this.http.get<ApiResponse<RawMaterial>>(`${this.apiUrl}/${id}`)
+      .pipe(extractData());
   }
 
   /**
    * Create new raw material
    */
   createRawMaterial(request: CreateRawMaterialRequest): Observable<RawMaterial> {
-    return this.http.post<RawMaterial>(this.apiUrl, request);
+    return this.http.post<ApiResponse<RawMaterial>>(this.apiUrl, request)
+      .pipe(extractData());
   }
 
   /**
    * Update existing raw material
    */
   updateRawMaterial(id: number, request: UpdateRawMaterialRequest): Observable<RawMaterial> {
-    return this.http.put<RawMaterial>(`${this.apiUrl}/${id}`, request);
+    return this.http.put<ApiResponse<RawMaterial>>(`${this.apiUrl}/${id}`, request)
+      .pipe(extractData());
   }
 
   /**
    * Delete raw material (soft delete)
    */
   deleteRawMaterial(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/${id}`)
+      .pipe(extractData());
   }
 
   /**
    * Restore deleted raw material
    */
   restoreRawMaterial(id: number): Observable<RawMaterial> {
-    return this.http.put<RawMaterial>(`${this.apiUrl}/${id}/restore`, {});
+    return this.http.put<ApiResponse<RawMaterial>>(`${this.apiUrl}/${id}/restore`, {})
+      .pipe(extractData());
   }
 
   /**
    * Get low stock raw materials
    */
   getLowStockRawMaterials(): Observable<RawMaterial[]> {
-    return this.http.get<RawMaterial[]>(`${this.apiUrl}/low-stock`);
+    return this.http.get<ApiResponse<RawMaterial[]>>(`${this.apiUrl}/low-stock`)
+      .pipe(extractData());
   }
 
   // ==================== Categories ====================
@@ -117,11 +120,8 @@ export class RawMaterialsService {
    * Get all categories
    */
   getCategories(): Observable<RawMaterialCategory[]> {
-    return this.http.get<CategoryApiResponse>(`${environment.apiUrl}/categories`)
-      .pipe(map(response => {
-          return response.data;
-        })
-      );
+    return this.http.get<ApiResponse<RawMaterialCategory[]>>(`${environment.apiUrl}/categories`)
+      .pipe(extractData());
   }
 
   /**
@@ -136,38 +136,42 @@ export class RawMaterialsService {
       params = params.set('sort', sort);
     }
 
-    return this.http.get<PageResponse<RawMaterialCategory>>(
+    return this.http.get<ApiResponse<PageResponse<RawMaterialCategory>>>(
       `${environment.apiUrl}/categories`,
       { params }
-    );
+    ).pipe(extractData());
   }
 
   /**
    * Get category by ID
    */
   getCategoryById(id: number): Observable<RawMaterialCategory> {
-    return this.http.get<RawMaterialCategory>(`${environment.apiUrl}/categories/${id}`);
+    return this.http.get<ApiResponse<RawMaterialCategory>>(`${environment.apiUrl}/categories/${id}`)
+      .pipe(extractData());
   }
 
   /**
    * Create new category
    */
   createCategory(request: CreateCategoryRequest): Observable<RawMaterialCategory> {
-    return this.http.post<RawMaterialCategory>(`${environment.apiUrl}/categories`, request);
+    return this.http.post<ApiResponse<RawMaterialCategory>>(`${environment.apiUrl}/categories`, request)
+      .pipe(extractData());
   }
 
   /**
    * Update existing category
    */
   updateCategory(id: number, request: UpdateCategoryRequest): Observable<RawMaterialCategory> {
-    return this.http.put<RawMaterialCategory>(`${environment.apiUrl}/categories/${id}`, request);
+    return this.http.put<ApiResponse<RawMaterialCategory>>(`${environment.apiUrl}/categories/${id}`, request)
+      .pipe(extractData());
   }
 
   /**
    * Delete category
    */
   deleteCategory(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/categories/${id}`);
+    return this.http.delete<ApiResponse<void>>(`${environment.apiUrl}/categories/${id}`)
+      .pipe(extractData());
   }
 
   // ==================== Measurement Units ====================
@@ -176,7 +180,8 @@ export class RawMaterialsService {
    * Get all measurement units
    */
   getUnits(): Observable<MeasurementUnit[]> {
-    return this.http.get<MeasurementUnit[]>(`${environment.apiUrl}/units`);
+    return this.http.get<ApiResponse<MeasurementUnit[]>>(`${environment.apiUrl}/units`)
+      .pipe(extractData());
   }
 
   /**
@@ -195,35 +200,40 @@ export class RawMaterialsService {
       params = params.set('sort', sort);
     }
 
-    return this.http.get<PageResponse<MeasurementUnit>>(`${environment.apiUrl}/units`, { params });
+    return this.http.get<ApiResponse<PageResponse<MeasurementUnit>>>(`${environment.apiUrl}/units`, { params })
+      .pipe(extractData());
   }
 
   /**
    * Get unit by ID
    */
   getUnitById(id: number): Observable<MeasurementUnit> {
-    return this.http.get<MeasurementUnit>(`${environment.apiUrl}/units/${id}`);
+    return this.http.get<ApiResponse<MeasurementUnit>>(`${environment.apiUrl}/units/${id}`)
+      .pipe(extractData());
   }
 
   /**
    * Create new measurement unit
    */
   createUnit(request: CreateUnitRequest): Observable<MeasurementUnit> {
-    return this.http.post<MeasurementUnit>(`${environment.apiUrl}/units`, request);
+    return this.http.post<ApiResponse<MeasurementUnit>>(`${environment.apiUrl}/units`, request)
+      .pipe(extractData());
   }
 
   /**
    * Update existing measurement unit
    */
   updateUnit(id: number, request: UpdateUnitRequest): Observable<MeasurementUnit> {
-    return this.http.put<MeasurementUnit>(`${environment.apiUrl}/units/${id}`, request);
+    return this.http.put<ApiResponse<MeasurementUnit>>(`${environment.apiUrl}/units/${id}`, request)
+      .pipe(extractData());
   }
 
   /**
    * Delete measurement unit
    */
   deleteUnit(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/units/${id}`);
+    return this.http.delete<ApiResponse<void>>(`${environment.apiUrl}/units/${id}`)
+      .pipe(extractData());
   }
 
   // ==================== Unit Conversions ====================
@@ -232,48 +242,52 @@ export class RawMaterialsService {
    * Get all unit conversions
    */
   getConversions(): Observable<UnitConversion[]> {
-    return this.http.get<UnitConversion[]>(`${environment.apiUrl}/conversions`);
+    return this.http.get<ApiResponse<UnitConversion[]>>(`${environment.apiUrl}/conversions`)
+      .pipe(extractData());
   }
 
   /**
    * Get conversions for a specific unit
    */
   getConversionsByUnit(unitId: number): Observable<UnitConversion[]> {
-    return this.http.get<UnitConversion[]>(`${environment.apiUrl}/conversions/unit/${unitId}`);
+    return this.http.get<ApiResponse<UnitConversion[]>>(`${environment.apiUrl}/conversions/unit/${unitId}`)
+      .pipe(extractData());
   }
 
   /**
    * Create new unit conversion
    */
   createConversion(request: CreateConversionRequest): Observable<UnitConversion> {
-    return this.http.post<UnitConversion>(`${environment.apiUrl}/conversions`, request);
+    return this.http.post<ApiResponse<UnitConversion>>(`${environment.apiUrl}/conversions`, request)
+      .pipe(extractData());
   }
 
   /**
    * Update existing unit conversion
    */
   updateConversion(id: number, conversionFactor: number): Observable<UnitConversion> {
-    return this.http.put<UnitConversion>(`${environment.apiUrl}/conversions/${id}`, {
+    return this.http.put<ApiResponse<UnitConversion>>(`${environment.apiUrl}/conversions/${id}`, {
       conversionFactor,
-    });
+    }).pipe(extractData());
   }
 
   /**
    * Delete unit conversion
    */
   deleteConversion(id: number): Observable<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/conversions/${id}`);
+    return this.http.delete<ApiResponse<void>>(`${environment.apiUrl}/conversions/${id}`)
+      .pipe(extractData());
   }
 
   /**
    * Convert quantity from one unit to another
    */
   convertQuantity(fromUnitId: number, toUnitId: number, quantity: number): Observable<number> {
-    return this.http.post<number>(`${environment.apiUrl}/conversions/convert`, {
+    return this.http.post<ApiResponse<number>>(`${environment.apiUrl}/conversions/convert`, {
       fromUnitId,
       toUnitId,
       quantity,
-    });
+    }).pipe(extractData());
   }
 
   // ==================== Allergens ====================
@@ -282,14 +296,16 @@ export class RawMaterialsService {
    * Get all allergens
    */
   getAllergens(): Observable<Allergen[]> {
-    return this.http.get<Allergen[]>(`${environment.apiUrl}/allergens`);
+    return this.http.get<ApiResponse<Allergen[]>>(`${environment.apiUrl}/allergens`)
+      .pipe(extractData());
   }
 
   /**
    * Get allergen by ID
    */
   getAllergenById(id: number): Observable<Allergen> {
-    return this.http.get<Allergen>(`${environment.apiUrl}/allergens/${id}`);
+    return this.http.get<ApiResponse<Allergen>>(`${environment.apiUrl}/allergens/${id}`)
+      .pipe(extractData());
   }
 
   // ==================== Statistics ====================
@@ -305,13 +321,13 @@ export class RawMaterialsService {
     totalCategories: number;
     averageCostPerKg: number;
   }> {
-    return this.http.get<{
+    return this.http.get<ApiResponse<{
       totalRawMaterials: number;
       activeRawMaterials: number;
       inactiveRawMaterials: number;
       lowStockCount: number;
       totalCategories: number;
       averageCostPerKg: number;
-    }>(`${this.apiUrl}/statistics`);
+    }>>(`${this.apiUrl}/statistics`).pipe(extractData());
   }
 }

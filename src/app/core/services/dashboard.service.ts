@@ -2,6 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, forkJoin, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { ApiResponse } from '../../shared/models';
+import { extractData } from '../../shared/operators/api-response.operator';
 
 export interface DashboardStats {
   totalRawMaterials: number;
@@ -49,7 +51,8 @@ export class DashboardService {
    * Get complete dashboard statistics
    */
   getDashboardStats(): Observable<DashboardStats> {
-    return this.http.get<DashboardStats>(`${this.apiUrl}/stats`);
+    return this.http.get<ApiResponse<DashboardStats>>(`${this.apiUrl}/stats`)
+      .pipe(extractData());
   }
 
   /**
@@ -57,23 +60,23 @@ export class DashboardService {
    */
   getAggregatedStats(): Observable<DashboardStats> {
     return forkJoin({
-      rawMaterials: this.http.get<{
+      rawMaterials: this.http.get<ApiResponse<{
         totalRawMaterials: number;
         activeRawMaterials: number;
         lowStockCount: number;
-      }>(`${environment.apiUrl}/raw-materials/statistics`),
-      recipes: this.http.get<{
+      }>>(`${environment.apiUrl}/raw-materials/statistics`).pipe(extractData()),
+      recipes: this.http.get<ApiResponse<{
         totalRecipes: number;
         activeRecipes: number;
-      }>(`${environment.apiUrl}/recipes/statistics`),
-      quotes: this.http.get<{
+      }>>(`${environment.apiUrl}/recipes/statistics`).pipe(extractData()),
+      quotes: this.http.get<ApiResponse<{
         totalQuotes: number;
         draftQuotes: number;
         sentQuotes: number;
         acceptedQuotes: number;
         totalRevenue: number;
         conversionRate: number;
-      }>(`${environment.apiUrl}/quotes/statistics`),
+      }>>(`${environment.apiUrl}/quotes/statistics`).pipe(extractData()),
     }).pipe(
       map(({ rawMaterials, recipes, quotes }) => ({
         totalRawMaterials: rawMaterials.totalRawMaterials,
@@ -97,9 +100,9 @@ export class DashboardService {
    * Get recent activity feed
    */
   getRecentActivity(limit: number = 10): Observable<RecentActivity[]> {
-    return this.http.get<RecentActivity[]>(`${this.apiUrl}/activity`, {
+    return this.http.get<ApiResponse<RecentActivity[]>>(`${this.apiUrl}/activity`, {
       params: new HttpParams().set('limit', limit.toString()),
-    });
+    }).pipe(extractData());
   }
 
   // ==================== Charts & Analytics ====================
@@ -108,41 +111,43 @@ export class DashboardService {
    * Get quotes by status chart data
    */
   getQuotesByStatusChart(): Observable<ChartData> {
-    return this.http.get<ChartData>(`${this.apiUrl}/charts/quotes-by-status`);
+    return this.http.get<ApiResponse<ChartData>>(`${this.apiUrl}/charts/quotes-by-status`)
+      .pipe(extractData());
   }
 
   /**
    * Get revenue over time chart data
    */
   getRevenueOverTimeChart(period: 'week' | 'month' | 'year' = 'month'): Observable<ChartData> {
-    return this.http.get<ChartData>(`${this.apiUrl}/charts/revenue-over-time`, {
+    return this.http.get<ApiResponse<ChartData>>(`${this.apiUrl}/charts/revenue-over-time`, {
       params: new HttpParams().set('period', period),
-    });
+    }).pipe(extractData());
   }
 
   /**
    * Get top recipes by usage chart data
    */
   getTopRecipesChart(limit: number = 10): Observable<ChartData> {
-    return this.http.get<ChartData>(`${this.apiUrl}/charts/top-recipes`, {
+    return this.http.get<ApiResponse<ChartData>>(`${this.apiUrl}/charts/top-recipes`, {
       params: new HttpParams().set('limit', limit.toString()),
-    });
+    }).pipe(extractData());
   }
 
   /**
    * Get materials by category chart data
    */
   getMaterialsByCategoryChart(): Observable<ChartData> {
-    return this.http.get<ChartData>(`${this.apiUrl}/charts/materials-by-category`);
+    return this.http.get<ApiResponse<ChartData>>(`${this.apiUrl}/charts/materials-by-category`)
+      .pipe(extractData());
   }
 
   /**
    * Get quote conversion rate over time
    */
   getQuoteConversionChart(period: 'week' | 'month' | 'year' = 'month'): Observable<ChartData> {
-    return this.http.get<ChartData>(`${this.apiUrl}/charts/quote-conversion`, {
+    return this.http.get<ApiResponse<ChartData>>(`${this.apiUrl}/charts/quote-conversion`, {
       params: new HttpParams().set('period', period),
-    });
+    }).pipe(extractData());
   }
 
   // ==================== Alerts & Notifications ====================
@@ -159,15 +164,13 @@ export class DashboardService {
       unitName: string;
     }>
   > {
-    return this.http.get<
-      Array<{
-        rawMaterialId: number;
-        rawMaterialName: string;
-        currentStock: number;
-        minimumStock: number;
-        unitName: string;
-      }>
-    >(`${this.apiUrl}/alerts/low-stock`);
+    return this.http.get<ApiResponse<Array<{
+      rawMaterialId: number;
+      rawMaterialName: string;
+      currentStock: number;
+      minimumStock: number;
+      unitName: string;
+    }>>>(`${this.apiUrl}/alerts/low-stock`).pipe(extractData());
   }
 
   /**
@@ -182,24 +185,23 @@ export class DashboardService {
       total: number;
     }>
   > {
-    return this.http.get<
-      Array<{
-        quoteId: number;
-        clientName: string;
-        expiryDate: string;
-        daysUntilExpiry: number;
-        total: number;
-      }>
-    >(`${this.apiUrl}/alerts/expiring-quotes`, {
+    return this.http.get<ApiResponse<Array<{
+      quoteId: number;
+      clientName: string;
+      expiryDate: string;
+      daysUntilExpiry: number;
+      total: number;
+    }>>>(`${this.apiUrl}/alerts/expiring-quotes`, {
       params: new HttpParams().set('days', daysUntilExpiry.toString()),
-    });
+    }).pipe(extractData());
   }
 
   /**
    * Get pending quotes count
    */
   getPendingQuotesCount(): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/alerts/pending-quotes-count`);
+    return this.http.get<ApiResponse<number>>(`${this.apiUrl}/alerts/pending-quotes-count`)
+      .pipe(extractData());
   }
 
   // ==================== Summary Reports ====================
@@ -220,7 +222,7 @@ export class DashboardService {
     if (date) {
       params = params.set('date', date);
     }
-    return this.http.get<{
+    return this.http.get<ApiResponse<{
       date: string;
       quotesCreated: number;
       quotesSent: number;
@@ -228,7 +230,7 @@ export class DashboardService {
       revenueGenerated: number;
       materialsAdded: number;
       recipesCreated: number;
-    }>(`${this.apiUrl}/summary/daily`, { params });
+    }>>(`${this.apiUrl}/summary/daily`, { params }).pipe(extractData());
   }
 
   /**
@@ -248,7 +250,7 @@ export class DashboardService {
     if (weekStart) {
       params = params.set('weekStart', weekStart);
     }
-    return this.http.get<{
+    return this.http.get<ApiResponse<{
       weekStart: string;
       weekEnd: string;
       quotesCreated: number;
@@ -257,7 +259,7 @@ export class DashboardService {
       revenueGenerated: number;
       materialsAdded: number;
       recipesCreated: number;
-    }>(`${this.apiUrl}/summary/weekly`, { params });
+    }>>(`${this.apiUrl}/summary/weekly`, { params }).pipe(extractData());
   }
 
   /**
@@ -280,7 +282,7 @@ export class DashboardService {
     if (month !== undefined) {
       params = params.set('month', month.toString());
     }
-    return this.http.get<{
+    return this.http.get<ApiResponse<{
       year: number;
       month: number;
       quotesCreated: number;
@@ -289,7 +291,7 @@ export class DashboardService {
       revenueGenerated: number;
       materialsAdded: number;
       recipesCreated: number;
-    }>(`${this.apiUrl}/summary/monthly`, { params });
+    }>>(`${this.apiUrl}/summary/monthly`, { params }).pipe(extractData());
   }
 
   // ==================== Export Reports ====================
