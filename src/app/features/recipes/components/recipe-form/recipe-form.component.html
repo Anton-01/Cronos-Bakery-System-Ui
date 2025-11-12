@@ -1,0 +1,158 @@
+<div class="recipe-form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-content">
+          <button mat-icon-button (click)="cancel()" class="back-button">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <h1>{{ (isEditMode ? 'recipes.edit' : 'recipes.create') | translate }}</h1>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="recipe-form">
+        <!-- Basic Information Section -->
+        <div class="form-section">
+          <h2>Información Básica</h2>
+          <div class="form-grid">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ 'recipes.name' | translate }}</mat-label>
+              <input matInput formControlName="name" [placeholder]="'recipes.name' | translate" />
+              <mat-error *ngIf="form.get('name')?.touched">
+                {{ getErrorMessage('name') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ 'recipes.description' | translate }}</mat-label>
+              <textarea
+                matInput
+                formControlName="description"
+                [placeholder]="'recipes.description' | translate"
+                rows="3"
+              ></textarea>
+              <mat-error *ngIf="form.get('description')?.touched">
+                {{ getErrorMessage('description') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Yield Information Section -->
+        <div class="form-section">
+          <h2>Rendimiento</h2>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'recipes.yieldQuantity' | translate }}</mat-label>
+              <input
+                matInput
+                type="number"
+                step="0.01"
+                formControlName="yieldQuantity"
+                [placeholder]="'recipes.yieldQuantity' | translate"
+              />
+              <mat-error *ngIf="form.get('yieldQuantity')?.touched">
+                {{ getErrorMessage('yieldQuantity') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'recipes.yieldUnit' | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="yieldUnit"
+                [placeholder]="'recipes.yieldUnit' | translate"
+              />
+              <mat-error *ngIf="form.get('yieldUnit')?.touched">
+                {{ getErrorMessage('yieldUnit') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Time Information Section -->
+        <div class="form-section">
+          <h2>Tiempos de Preparación</h2>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Tiempo de Preparación (min)</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="preparationTimeMinutes"
+                placeholder="Minutos"
+              />
+              <mat-error *ngIf="form.get('preparationTimeMinutes')?.touched">
+                {{ getErrorMessage('preparationTimeMinutes') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Tiempo de Horneado (min)</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="bakingTimeMinutes"
+                placeholder="Minutos"
+              />
+              <mat-error *ngIf="form.get('bakingTimeMinutes')?.touched">
+                {{ getErrorMessage('bakingTimeMinutes') }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Tiempo de Enfriado (min)</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="coolingTimeMinutes"
+                placeholder="Minutos"
+              />
+              <mat-error *ngIf="form.get('coolingTimeMinutes')?.touched">
+                {{ getErrorMessage('coolingTimeMinutes') }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Instructions Section -->
+        <div class="form-section">
+          <h2>Instrucciones</h2>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Instrucciones de Preparación</mat-label>
+            <textarea
+              matInput
+              formControlName="instructions"
+              placeholder="Describe los pasos para preparar esta receta..."
+              rows="8"
+            ></textarea>
+            <mat-error *ngIf="form.get('instructions')?.touched">
+              {{ getErrorMessage('instructions') }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Info Message -->
+        <div class="info-message">
+          <mat-icon>info</mat-icon>
+          <p>Nota: Los ingredientes y costos fijos se pueden agregar después de crear la receta.</p>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button mat-button type="button" (click)="cancel()" [disabled]="loading">
+            {{ 'common.cancel' | translate }}
+          </button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading || form.invalid">
+            <mat-spinner *ngIf="loading" diameter="20" class="button-spinner"></mat-spinner>
+            <span *ngIf="!loading">
+              {{ 'common.save' | translate }}
+            </span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
