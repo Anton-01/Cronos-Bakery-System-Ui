@@ -10,6 +10,8 @@ import {
   RecipeCostBreakdown,
 } from '../../shared/models/recipe.model';
 import { PageResponse } from '../../shared/models/common.model';
+import { ApiResponse } from '../../shared/models/api-response.model';
+import { extractData } from '../../shared/operators/api-response.operator';
 
 @Injectable({
   providedIn: 'root',
@@ -63,63 +65,72 @@ export class RecipesService {
       params = params.set('maxYield', filters.maxYield.toString());
     }
 
-    return this.http.get<PageResponse<Recipe>>(this.apiUrl, { params });
+    return this.http.get<ApiResponse<PageResponse<Recipe>>>(this.apiUrl, { params })
+      .pipe(extractData());
   }
 
   /**
    * Get recipe by ID
    */
   getRecipeById(id: number): Observable<Recipe> {
-    return this.http.get<Recipe>(`${this.apiUrl}/${id}`);
+    return this.http.get<ApiResponse<Recipe>>(`${this.apiUrl}/${id}`)
+      .pipe(extractData());
   }
 
   /**
    * Create new recipe
    */
   createRecipe(request: CreateRecipeRequest): Observable<Recipe> {
-    return this.http.post<Recipe>(this.apiUrl, request);
+    return this.http.post<ApiResponse<Recipe>>(this.apiUrl, request)
+      .pipe(extractData());
   }
 
   /**
    * Update existing recipe
    */
   updateRecipe(id: number, request: UpdateRecipeRequest): Observable<Recipe> {
-    return this.http.put<Recipe>(`${this.apiUrl}/${id}`, request);
+    return this.http.put<ApiResponse<Recipe>>(`${this.apiUrl}/${id}`, request)
+      .pipe(extractData());
   }
 
   /**
    * Delete recipe (soft delete)
    */
   deleteRecipe(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/${id}`)
+      .pipe(extractData());
   }
 
   /**
    * Restore deleted recipe
    */
   restoreRecipe(id: number): Observable<Recipe> {
-    return this.http.put<Recipe>(`${this.apiUrl}/${id}/restore`, {});
+    return this.http.put<ApiResponse<Recipe>>(`${this.apiUrl}/${id}/restore`, {})
+      .pipe(extractData());
   }
 
   /**
    * Duplicate recipe
    */
   duplicateRecipe(id: number, newName: string): Observable<Recipe> {
-    return this.http.post<Recipe>(`${this.apiUrl}/${id}/duplicate`, { name: newName });
+    return this.http.post<ApiResponse<Recipe>>(`${this.apiUrl}/${id}/duplicate`, { name: newName })
+      .pipe(extractData());
   }
 
   /**
    * Create new version of recipe
    */
   createVersion(id: number, versionNotes?: string): Observable<Recipe> {
-    return this.http.post<Recipe>(`${this.apiUrl}/${id}/version`, { versionNotes });
+    return this.http.post<ApiResponse<Recipe>>(`${this.apiUrl}/${id}/version`, { versionNotes })
+      .pipe(extractData());
   }
 
   /**
    * Get recipe versions
    */
   getRecipeVersions(id: number): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.apiUrl}/${id}/versions`);
+    return this.http.get<ApiResponse<Recipe[]>>(`${this.apiUrl}/${id}/versions`)
+      .pipe(extractData());
   }
 
   // ==================== Recipe Cost Calculations ====================
@@ -128,7 +139,8 @@ export class RecipesService {
    * Calculate recipe cost
    */
   calculateRecipeCost(id: number): Observable<RecipeCostBreakdown> {
-    return this.http.get<RecipeCostBreakdown>(`${this.apiUrl}/${id}/cost`);
+    return this.http.get<ApiResponse<RecipeCostBreakdown>>(`${this.apiUrl}/${id}/cost`)
+      .pipe(extractData());
   }
 
   /**
@@ -141,7 +153,8 @@ export class RecipesService {
     yieldQuantity: number;
     yieldUnitId: number;
   }): Observable<RecipeCostBreakdown> {
-    return this.http.post<RecipeCostBreakdown>(`${this.apiUrl}/calculate-cost`, request);
+    return this.http.post<ApiResponse<RecipeCostBreakdown>>(`${this.apiUrl}/calculate-cost`, request)
+      .pipe(extractData());
   }
 
   /**
@@ -152,7 +165,8 @@ export class RecipesService {
     if (targetUnitId !== undefined) {
       params = params.set('targetUnitId', targetUnitId.toString());
     }
-    return this.http.get<number>(`${this.apiUrl}/${id}/cost-per-unit`, { params });
+    return this.http.get<ApiResponse<number>>(`${this.apiUrl}/${id}/cost-per-unit`, { params })
+      .pipe(extractData());
   }
 
   // ==================== Recipe Scaling ====================
@@ -170,15 +184,15 @@ export class RecipesService {
     originalYield: number;
     targetYield: number;
   }> {
-    return this.http.post<{
+    return this.http.post<ApiResponse<{
       scaledIngredients: RecipeIngredient[];
       scaleFactor: number;
       originalYield: number;
       targetYield: number;
-    }>(`${this.apiUrl}/${id}/scale`, {
+    }>>(`${this.apiUrl}/${id}/scale`, {
       targetYield,
       targetUnitId,
-    });
+    }).pipe(extractData());
   }
 
   // ==================== Recipe Search & Filters ====================
@@ -191,23 +205,25 @@ export class RecipesService {
     rawMaterialIds.forEach(id => {
       params = params.append('rawMaterialIds', id.toString());
     });
-    return this.http.get<Recipe[]>(`${this.apiUrl}/search/by-ingredients`, { params });
+    return this.http.get<ApiResponse<Recipe[]>>(`${this.apiUrl}/search/by-ingredients`, { params })
+      .pipe(extractData());
   }
 
   /**
    * Get recipes containing specific allergen
    */
   getRecipesByAllergen(allergenId: number): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.apiUrl}/search/by-allergen/${allergenId}`);
+    return this.http.get<ApiResponse<Recipe[]>>(`${this.apiUrl}/search/by-allergen/${allergenId}`)
+      .pipe(extractData());
   }
 
   /**
    * Get popular recipes
    */
   getPopularRecipes(limit: number = 10): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.apiUrl}/popular`, {
+    return this.http.get<ApiResponse<Recipe[]>>(`${this.apiUrl}/popular`, {
       params: new HttpParams().set('limit', limit.toString()),
-    });
+    }).pipe(extractData());
   }
 
   // ==================== Statistics ====================
@@ -224,7 +240,7 @@ export class RecipesService {
     cheapestRecipe: Recipe | null;
     totalVersions: number;
   }> {
-    return this.http.get<{
+    return this.http.get<ApiResponse<{
       totalRecipes: number;
       activeRecipes: number;
       inactiveRecipes: number;
@@ -232,7 +248,7 @@ export class RecipesService {
       mostExpensiveRecipe: Recipe | null;
       cheapestRecipe: Recipe | null;
       totalVersions: number;
-    }>(`${this.apiUrl}/statistics`);
+    }>>(`${this.apiUrl}/statistics`).pipe(extractData());
   }
 
   // ==================== Batch Operations ====================
@@ -241,7 +257,8 @@ export class RecipesService {
    * Batch update recipe prices
    */
   batchUpdatePrices(updates: Array<{ recipeId: number; newPrice: number }>): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/batch/prices`, { updates });
+    return this.http.put<ApiResponse<void>>(`${this.apiUrl}/batch/prices`, { updates })
+      .pipe(extractData());
   }
 
   /**

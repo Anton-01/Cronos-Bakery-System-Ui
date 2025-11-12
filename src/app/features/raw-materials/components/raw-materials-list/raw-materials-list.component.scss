@@ -23,6 +23,11 @@
     font-size: variables.$font-size-2xl;
     font-weight: 600;
   }
+
+  .action-buttons {
+    display: flex;
+    gap: variables.$spacing-sm;
+  }
 }
 
 .filter-form {

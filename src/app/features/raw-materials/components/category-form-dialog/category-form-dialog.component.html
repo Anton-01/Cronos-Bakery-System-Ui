@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>
+  {{ (isEditMode ? 'categories.edit' : 'categories.create') | translate }}
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'categories.name' | translate }}</mat-label>
+      <input matInput formControlName="name" [placeholder]="'categories.name' | translate" />
+      <mat-error *ngIf="form.get('name')?.hasError('required')">
+        {{ getErrorMessage('name') }}
+      </mat-error>
+      <mat-error *ngIf="form.get('name')?.hasError('maxlength')">
+        {{ getErrorMessage('name') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'categories.description' | translate }}</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        [placeholder]="'categories.description' | translate"
+        rows="4"
+      ></textarea>
+      <mat-error *ngIf="form.get('description')?.hasError('maxlength')">
+        {{ getErrorMessage('description') }}
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()" [disabled]="loading">
+    {{ 'common.cancel' | translate }}
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onSubmit()"
+    [disabled]="loading || form.invalid"
+  >
+    <mat-spinner *ngIf="loading" diameter="20" class="button-spinner"></mat-spinner>
+    <span *ngIf="!loading">
+      {{ (isEditMode ? 'common.save' : 'common.create') | translate }}
+    </span>
+  </button>
+</mat-dialog-actions>
