@@ -22,7 +22,7 @@ export class LanguageService {
   /**
    * Initialize translation service
    */
-  init(): void {
+  async init(): Promise<void> {
     const savedLanguage = this.getSavedLanguage();
 
     // Set available languages
@@ -31,8 +31,31 @@ export class LanguageService {
     // Set default language
     this.translate.setDefaultLang('es');
 
+    // Load translations manually
+    await this.loadTranslations();
+
     // Set current language
     this.translate.use(savedLanguage);
+  }
+
+  /**
+   * Load translations from JSON files
+   */
+  private async loadTranslations(): Promise<void> {
+    try {
+      const [esTranslations, enTranslations] = await Promise.all([
+        fetch('/i18n/es.json').then(res => res.json()),
+        fetch('/i18n/en.json').then(res => res.json()),
+      ]);
+
+      this.translate.setTranslation('es', esTranslations);
+      this.translate.setTranslation('en', enTranslations);
+    } catch (error) {
+      console.error('Error loading translations:', error);
+      // Set empty translations as fallback
+      this.translate.setTranslation('es', {});
+      this.translate.setTranslation('en', {});
+    }
   }
 
   /**
