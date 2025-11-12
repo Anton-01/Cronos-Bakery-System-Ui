@@ -12,13 +12,26 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'create',
+        loadComponent: () =>
+          import('./components/quote-form/quote-form.component').then(
+            m => m.QuoteFormComponent
+          ),
+      },
+      {
+        path: 'edit/:id',
+        loadComponent: () =>
+          import('./components/quote-form/quote-form.component').then(
+            m => m.QuoteFormComponent
+          ),
+      },
+      {
         path: 'public/:token',
         loadComponent: () =>
           import('./components/quote-public-view/quote-public-view.component').then(
             m => m.QuotePublicViewComponent
           ),
       },
-      // TODO: Add more routes for create, edit, details
     ],
   },
 ];

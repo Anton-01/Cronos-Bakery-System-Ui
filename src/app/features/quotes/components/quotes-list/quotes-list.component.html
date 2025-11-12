@@ -1,0 +1,219 @@
+<div class="quotes-list-container">
+  <mat-card class="filter-card">
+    <mat-card-header>
+      <mat-card-title>
+        <div class="header-content">
+          <h1>{{ 'quotes.title' | translate }}</h1>
+          <button
+            mat-raised-button
+            color="primary"
+            routerLink="/quotes/create">
+            <mat-icon>add</mat-icon>
+            {{ 'quotes.create' | translate }}
+          </button>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="filterForm" class="filter-form">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'common.search' | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="clientName"
+            [placeholder]="'quotes.searchPlaceholder' | translate"
+          />
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'quotes.status' | translate }}</mat-label>
+          <mat-select formControlName="status">
+            <mat-option [value]="null">{{ 'common.all' | translate }}</mat-option>
+            <mat-option value="DRAFT">{{ 'quotes.statusDraft' | translate }}</mat-option>
+            <mat-option value="SENT">{{ 'quotes.statusSent' | translate }}</mat-option>
+            <mat-option value="ACCEPTED">{{ 'quotes.statusAccepted' | translate }}</mat-option>
+            <mat-option value="REJECTED">{{ 'quotes.statusRejected' | translate }}</mat-option>
+            <mat-option value="EXPIRED">{{ 'quotes.statusExpired' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="clearFilters()"
+          class="clear-button"
+        >
+          <mat-icon>clear</mat-icon>
+          {{ 'common.clear' | translate }}
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" matSort
+          (matSortChange)="onSortChange($event)" class="quotes-table">
+          <!-- Quote Number Column -->
+          <ng-container matColumnDef="quoteNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'quotes.quoteNumber' | translate }}</th>
+            <td mat-cell *matCellDef="let quote">
+              <strong>{{ quote.quoteNumber }}</strong>
+            </td>
+          </ng-container>
+
+          <!-- Client Name Column -->
+          <ng-container matColumnDef="clientName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'quotes.clientName' | translate }}</th>
+            <td mat-cell *matCellDef="let quote">
+              <div class="client-info">
+                <strong>{{ quote.clientName }}</strong>
+                @if (quote.clientEmail) {
+                  <small class="email">{{ quote.clientEmail }}</small>
+                }
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Total Column -->
+          <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'quotes.total' | translate }}</th>
+            <td mat-cell *matCellDef="let quote">
+              ${{ quote.total | number: '1.2-2' }} {{ quote.currency }}
+            </td>
+          </ng-container>
+
+          <!-- Items Count Column -->
+          <ng-container matColumnDef="itemsCount">
+            <th mat-header-cell *matHeaderCellDef>{{ 'quotes.items' | translate }}</th>
+            <td mat-cell *matCellDef="let quote">
+              {{ quote.items?.length || 0 }} {{ 'quotes.itemsCount' | translate }}
+            </td>
+          </ng-container>
+
+          <!-- Valid Until Column -->
+          <ng-container matColumnDef="validUntil">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'quotes.validUntil' | translate }}</th>
+            <td mat-cell *matCellDef="let quote">
+              {{ quote.validUntil | date: 'dd/MM/yyyy' }}
+              @if (isExpiringSoon(quote.validUntil)) {
+                <mat-icon class="warning-icon" matTooltip="{{ 'quotes.expiringSoon' | translate }}">warning</mat-icon>
+              }
+            </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'quotes.status' | translate }}</th>
+            <td mat-cell *matCellDef="let quote">
+              <mat-chip [color]="getStatusColor(quote.status)">
+                {{ getStatusLabel(quote.status) | translate }}
+              </mat-chip>
+            </td>
+          </ng-container>
+
+          <!-- Created At Column -->
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'common.createdAt' | translate }}</th>
+            <td mat-cell *matCellDef="let quote">
+              {{ quote.createdAt | date: 'dd/MM/yyyy HH:mm' }}
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>{{ 'common.actions' | translate }}</th>
+            <td mat-cell *matCellDef="let quote">
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                aria-label="Actions">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="viewQuote(quote)">
+                  <mat-icon>visibility</mat-icon>
+                  <span>{{ 'common.view' | translate }}</span>
+                </button>
+                <button mat-menu-item (click)="editQuote(quote)">
+                  <mat-icon>edit</mat-icon>
+                  <span>{{ 'common.edit' | translate }}</span>
+                </button>
+                <button mat-menu-item (click)="duplicateQuote(quote)">
+                  <mat-icon>content_copy</mat-icon>
+                  <span>{{ 'quotes.duplicate' | translate }}</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="downloadPdf(quote)">
+                  <mat-icon>picture_as_pdf</mat-icon>
+                  <span>{{ 'quotes.downloadPdf' | translate }}</span>
+                </button>
+                @if (quote.isShareable) {
+                  <button mat-menu-item (click)="copyShareLink(quote)">
+                    <mat-icon>link</mat-icon>
+                    <span>{{ 'quotes.copyShareLink' | translate }}</span>
+                  </button>
+                }
+                <mat-divider></mat-divider>
+                @if (quote.status === 'DRAFT') {
+                  <button mat-menu-item (click)="markAsSent(quote)">
+                    <mat-icon>send</mat-icon>
+                    <span>{{ 'quotes.markAsSent' | translate }}</span>
+                  </button>
+                }
+                @if (quote.status === 'SENT') {
+                  <button mat-menu-item (click)="markAsAccepted(quote)">
+                    <mat-icon color="primary">check_circle</mat-icon>
+                    <span>{{ 'quotes.markAsAccepted' | translate }}</span>
+                  </button>
+                  <button mat-menu-item (click)="markAsRejected(quote)">
+                    <mat-icon color="warn">cancel</mat-icon>
+                    <span>{{ 'quotes.markAsRejected' | translate }}</span>
+                  </button>
+                }
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="deleteQuote(quote)">
+                  <mat-icon color="warn">delete</mat-icon>
+                  <span>{{ 'common.delete' | translate }}</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+          <!-- No data row -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell no-data" [attr.colspan]="displayedColumns.length">
+              @if (loading) {
+                <div class="loading-container">
+                  <mat-icon class="loading-icon">hourglass_empty</mat-icon>
+                  <p>{{ 'common.loading' | translate }}</p>
+                </div>
+              } @else {
+                <div class="no-data-container">
+                  <mat-icon>inbox</mat-icon>
+                  <p>{{ 'quotes.noData' | translate }}</p>
+                </div>
+              }
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <mat-paginator
+        [length]="totalElements"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[5, 10, 25, 50, 100]"
+        [pageIndex]="pageIndex"
+        (page)="onPageChange($event)"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

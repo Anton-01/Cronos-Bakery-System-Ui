@@ -1,0 +1,158 @@
+@use '../../../../../styles/variables';
+
+.quotes-list-container {
+  padding: variables.$spacing-lg;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.filter-card {
+  margin-bottom: variables.$spacing-lg;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  h1 {
+    margin: 0;
+    font-size: variables.$font-size-2xl;
+    font-weight: 600;
+  }
+
+  button {
+    flex-shrink: 0;
+  }
+}
+
+.filter-form {
+  display: flex;
+  gap: variables.$spacing-md;
+  align-items: flex-start;
+  flex-wrap: wrap;
+
+  mat-form-field {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .clear-button {
+    margin-top: 8px;
+  }
+}
+
+.table-card {
+  mat-card-content {
+    padding: 0;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.quotes-table {
+  width: 100%;
+
+  th {
+    font-weight: 600;
+    color: var(--text-primary);
+    background-color: var(--background-secondary);
+  }
+
+  .client-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .email {
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+  }
+
+  .warning-icon {
+    color: var(--warn-color);
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+
+  mat-chip {
+    font-size: 12px;
+    min-height: 24px;
+    padding: 4px 8px;
+  }
+}
+
+.no-data,
+.loading-container,
+.no-data-container {
+  text-align: center;
+  padding: variables.$spacing-xl;
+  color: var(--text-secondary);
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: variables.$spacing-sm;
+    opacity: 0.5;
+  }
+
+  .loading-icon {
+    animation: spin 2s linear infinite;
+  }
+
+  p {
+    margin: 0;
+    font-size: variables.$font-size-lg;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .quotes-list-container {
+    padding: variables.$spacing-md;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: variables.$spacing-md;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .filter-form {
+    flex-direction: column;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .clear-button {
+      width: 100%;
+      margin-top: 0;
+    }
+  }
+
+  .quotes-table {
+    th, td {
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
+}
