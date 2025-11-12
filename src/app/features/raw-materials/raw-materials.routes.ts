@@ -11,7 +11,20 @@ export const routes: Routes = [
             m => m.RawMaterialsListComponent
           ),
       },
-      // TODO: Add more routes for create, edit, details
+      {
+        path: 'create',
+        loadComponent: () =>
+          import('./components/raw-material-form/raw-material-form.component').then(
+            m => m.RawMaterialFormComponent
+          ),
+      },
+      {
+        path: 'edit/:id',
+        loadComponent: () =>
+          import('./components/raw-material-form/raw-material-form.component').then(
+            m => m.RawMaterialFormComponent
+          ),
+      },
     ],
   },
 ];
