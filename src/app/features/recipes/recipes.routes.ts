@@ -11,7 +11,20 @@ export const routes: Routes = [
             m => m.RecipesListComponent
           ),
       },
-      // TODO: Add more routes for create, edit, details
+      {
+        path: 'create',
+        loadComponent: () =>
+          import('./components/recipe-form/recipe-form.component').then(
+            m => m.RecipeFormComponent
+          ),
+      },
+      {
+        path: 'edit/:id',
+        loadComponent: () =>
+          import('./components/recipe-form/recipe-form.component').then(
+            m => m.RecipeFormComponent
+          ),
+      },
     ],
   },
 ];

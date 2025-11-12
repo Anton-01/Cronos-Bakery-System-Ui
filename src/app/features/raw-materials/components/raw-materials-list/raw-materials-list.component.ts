@@ -148,8 +148,8 @@ export class RawMaterialsListComponent implements OnInit {
   }
 
   editMaterial(material: RawMaterial): void {
-    // TODO: Navigate to edit page or open dialog
-    console.log('Edit material:', material);
+    // Navigate to edit page
+    window.location.href = `/raw-materials/edit/${material.id}`;
   }
 
   viewDetails(material: RawMaterial): void {

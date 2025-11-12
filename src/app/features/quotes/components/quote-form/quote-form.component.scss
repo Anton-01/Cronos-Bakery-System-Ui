@@ -1,0 +1,97 @@
+@use '../../../../../styles/variables';
+
+.quote-form-container {
+  padding: variables.$spacing-lg;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-md;
+  width: 100%;
+
+  h1 {
+    margin: 0;
+    font-size: variables.$font-size-2xl;
+    font-weight: 600;
+  }
+
+  .back-button {
+    flex-shrink: 0;
+  }
+}
+
+.quote-form {
+  margin-top: variables.$spacing-lg;
+}
+
+.form-section {
+  margin-bottom: variables.$spacing-xl;
+
+  h2 {
+    font-size: variables.$font-size-lg;
+    font-weight: 600;
+    margin: 0 0 variables.$spacing-md 0;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: variables.$spacing-sm;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: variables.$spacing-md;
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+.info-message {
+  display: flex;
+  align-items: flex-start;
+  gap: variables.$spacing-sm;
+  padding: variables.$spacing-md;
+  background-color: var(--background-secondary);
+  border-left: 4px solid var(--primary-color);
+  margin-bottom: variables.$spacing-lg;
+
+  mat-icon {
+    color: var(--primary-color);
+    flex-shrink: 0;
+  }
+
+  p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: variables.$spacing-md;
+  margin-top: variables.$spacing-xl;
+  padding-top: variables.$spacing-md;
+  border-top: 1px solid var(--border-color);
+}
+
+.button-spinner {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+
+    .full-width {
+      grid-column: 1;
+    }
+  }
+}
