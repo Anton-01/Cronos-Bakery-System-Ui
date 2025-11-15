@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chip';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
@@ -19,7 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { QuotesService } from '../../../../core/services/quotes.service';
 import { NotificationService } from '../../../../core/services/notification.service';
-import { Quote, QuoteStatus } from '../../../../shared/models/quote.model';
+import { Quote, QuoteStatus } from '../../../../shared/models';
 
 @Component({
   selector: 'app-quotes-list',

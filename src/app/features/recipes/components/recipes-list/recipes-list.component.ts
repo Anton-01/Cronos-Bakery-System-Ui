@@ -17,7 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { RecipesService } from '../../../../core/services/recipes.service';
 import { NotificationService } from '../../../../core/services/notification.service';
-import { Recipe } from '../../../../shared/models/recipe.model';
+import { Recipe } from '../../../../shared/models';
 
 @Component({
   selector: 'app-recipes-list',
