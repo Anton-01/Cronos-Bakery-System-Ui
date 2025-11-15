@@ -1,0 +1,174 @@
+.quote-details-dialog {
+  min-width: 600px;
+  max-width: 900px;
+
+  h2[mat-dialog-title] {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 1rem 0;
+
+    mat-icon {
+      color: var(--primary-color);
+    }
+  }
+
+  mat-dialog-content {
+    padding: 0 1.5rem;
+  }
+
+  .detail-section {
+    padding: 1.5rem 0;
+
+    h3 {
+      margin: 0 0 1rem 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      .label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.6);
+      }
+
+      .value {
+        font-size: 1rem;
+        color: rgba(0, 0, 0, 0.87);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        &.quote-number {
+          font-weight: 600;
+          color: var(--primary-color);
+        }
+
+        &.warning {
+          color: #f57c00;
+
+          .warning-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+    }
+
+    .items-table {
+      width: 100%;
+      margin-top: 1rem;
+
+      th {
+        font-weight: 600;
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+
+      td, th {
+        padding: 0.75rem;
+      }
+
+      .mat-mdc-footer-row {
+        font-weight: 600;
+        background-color: rgba(63, 81, 181, 0.08);
+      }
+    }
+
+    .notes {
+      margin: 0;
+      padding: 1rem;
+      background-color: rgba(0, 0, 0, 0.04);
+      border-radius: 4px;
+      line-height: 1.6;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .share-link {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+
+      .share-input {
+        flex: 1;
+        padding: 0.75rem;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 4px;
+        font-size: 0.875rem;
+        background-color: rgba(0, 0, 0, 0.02);
+
+        &:focus {
+          outline: none;
+          border-color: var(--primary-color);
+        }
+      }
+    }
+  }
+
+  mat-dialog-actions {
+    padding: 1rem 1.5rem;
+    margin: 0;
+
+    button {
+      margin-left: 0.5rem;
+
+      mat-icon {
+        margin-right: 0.25rem;
+      }
+    }
+  }
+}
+
+// Dark theme
+@media (prefers-color-scheme: dark) {
+  .quote-details-dialog {
+    .detail-section {
+      h3 {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .detail-item {
+        .label {
+          color: rgba(255, 255, 255, 0.6);
+        }
+
+        .value {
+          color: rgba(255, 255, 255, 0.87);
+        }
+      }
+
+      .items-table {
+        th {
+          background-color: rgba(255, 255, 255, 0.04);
+        }
+
+        .mat-mdc-footer-row {
+          background-color: rgba(63, 81, 181, 0.12);
+        }
+      }
+
+      .notes {
+        background-color: rgba(255, 255, 255, 0.04);
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .share-link .share-input {
+        border-color: rgba(255, 255, 255, 0.12);
+        background-color: rgba(255, 255, 255, 0.02);
+        color: rgba(255, 255, 255, 0.87);
+      }
+    }
+  }
+}

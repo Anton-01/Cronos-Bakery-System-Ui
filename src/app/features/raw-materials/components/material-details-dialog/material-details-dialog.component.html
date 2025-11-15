@@ -1,0 +1,104 @@
+<div class="material-details-dialog">
+  <h2 mat-dialog-title>
+    <mat-icon>info</mat-icon>
+    Detalles de Materia Prima
+  </h2>
+
+  <mat-dialog-content>
+    <div class="detail-section">
+      <h3>Información General</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="label">Nombre:</span>
+          <span class="value">{{ material.name }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Categoría:</span>
+          <span class="value">{{ material.category.name }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Unidad de Medida:</span>
+          <span class="value">{{ material.unitOfMeasure }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Estado:</span>
+          <mat-chip [color]="material.isActive ? 'primary' : 'warn'">
+            {{ material.isActive ? 'Activo' : 'Inactivo' }}
+          </mat-chip>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="detail-section">
+      <h3>Información de Stock</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="label">Stock Actual:</span>
+          <span class="value stock-value">{{ material.currentStock }} {{ material.unitOfMeasure }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Stock Mínimo:</span>
+          <span class="value">{{ material.minimumStock }} {{ material.unitOfMeasure }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Estado del Stock:</span>
+          <mat-chip [color]="getStockColor()">
+            {{ getStockStatus() }}
+          </mat-chip>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="detail-section">
+      <h3>Información Financiera</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="label">Costo Unitario:</span>
+          <span class="value price">${{ material.unitCost | number:'1.2-2' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Proveedor:</span>
+          <span class="value">{{ material.supplier || 'No especificado' }}</span>
+        </div>
+      </div>
+    </div>
+
+    @if (material.description) {
+      <mat-divider></mat-divider>
+      <div class="detail-section">
+        <h3>Descripción</h3>
+        <p class="description">{{ material.description }}</p>
+      </div>
+    }
+
+    <mat-divider></mat-divider>
+
+    <div class="detail-section">
+      <h3>Fechas</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="label">Fecha de Creación:</span>
+          <span class="value">{{ material.createdAt | date:'medium' }}</span>
+        </div>
+        @if (material.updatedAt) {
+          <div class="detail-item">
+            <span class="label">Última Actualización:</span>
+            <span class="value">{{ material.updatedAt | date:'medium' }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Cerrar</button>
+    <button mat-raised-button color="primary" [routerLink]="['/raw-materials/edit', material.id]" (click)="close()">
+      <mat-icon>edit</mat-icon>
+      Editar
+    </button>
+  </mat-dialog-actions>
+</div>

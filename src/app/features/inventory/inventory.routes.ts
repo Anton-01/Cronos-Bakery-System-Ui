@@ -4,7 +4,13 @@ export const routes: Routes = [
   {
     path: '',
     children: [
-      // TODO: Implement inventory routes
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/inventory-list/inventory-list.component').then(
+            (m) => m.InventoryListComponent
+          ),
+      },
     ],
   },
 ];

@@ -74,6 +74,35 @@ export class AuthService {
   }
 
   /**
+   * Request password reset
+   */
+  forgotPassword(email: string): Observable<void> {
+    return this.http.post<ApiResponse<void>>(`${this.API_URL}/forgot-password`, { email }).pipe(
+      map(() => undefined),
+      catchError((error) => {
+        console.error('Forgot password error:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  /**
+   * Reset password with token
+   */
+  resetPassword(token: string, newPassword: string): Observable<void> {
+    return this.http.post<ApiResponse<void>>(`${this.API_URL}/reset-password`, {
+      token,
+      newPassword,
+    }).pipe(
+      map(() => undefined),
+      catchError((error) => {
+        console.error('Reset password error:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  /**
    * Refresh access token
    */
   refreshToken(): Observable<TokenResponse> {
@@ -87,6 +116,7 @@ export class AuthService {
       map((response) => response.data),
       tap((tokenResponse) => {
         this.storage.setAccessToken(tokenResponse.accessToken);
+        this.storage.updateLastActivity();
       }),
       catchError((error) => {
         console.error('Token refresh error:', error);
@@ -94,6 +124,68 @@ export class AuthService {
         return throwError(() => error);
       })
     );
+  }
+
+  /**
+   * Restore session on app initialization
+   * Checks if there's a valid refresh token and restores the session
+   */
+  restoreSession(): Observable<boolean> {
+    const refreshToken = this.storage.getRefreshToken();
+    const userData = this.storage.getUserData<User>();
+
+    if (!refreshToken) {
+      return new Observable(observer => {
+        observer.next(false);
+        observer.complete();
+      });
+    }
+
+    // If session is still active (within 30 minutes), just restore user data
+    if (this.storage.isSessionActive() && this.storage.getAccessToken()) {
+      if (userData) {
+        this.currentUserSubject.next(userData);
+        this.storage.updateLastActivity();
+        return new Observable(observer => {
+          observer.next(true);
+          observer.complete();
+        });
+      }
+    }
+
+    // Session expired or no access token, try to refresh
+    return this.refreshToken().pipe(
+      map(() => {
+        if (userData) {
+          this.currentUserSubject.next(userData);
+        }
+        return true;
+      }),
+      catchError(() => {
+        this.clearUserData();
+        return new Observable(observer => {
+          observer.next(false);
+          observer.complete();
+        });
+      })
+    );
+  }
+
+  /**
+   * Re-authenticate with password only (for session renewal)
+   */
+  reAuthenticate(password: string): Observable<LoginResponse> {
+    const currentUser = this.currentUserValue;
+    if (!currentUser || !currentUser.username) {
+      return throwError(() => new Error('No current user available'));
+    }
+
+    const credentials: LoginRequest = {
+      username: currentUser.username,
+      password: password,
+    };
+
+    return this.login(credentials);
   }
 
   /**

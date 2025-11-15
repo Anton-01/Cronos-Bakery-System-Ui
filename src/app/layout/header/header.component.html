@@ -32,13 +32,56 @@
       <!-- Notifications -->
       <button
         mat-icon-button
-        [matBadge]="notificationCount"
+        [matBadge]="(notificationCount$ | async) || 0"
+        [matBadgeHidden]="(notificationCount$ | async) === 0"
         matBadgeColor="warn"
-        matTooltip="Notifications"
+        matTooltip="Notificaciones"
+        [matMenuTriggerFor]="notificationsMenu"
         class="action-button"
       >
         <mat-icon>notifications</mat-icon>
       </button>
+
+      <mat-menu #notificationsMenu="matMenu" class="notifications-menu" xPosition="before">
+        <div class="notifications-header" (click)="$event.stopPropagation()">
+          <h3>Notificaciones</h3>
+          <div class="notifications-actions">
+            <button mat-button (click)="markAllNotificationsAsRead()" *ngIf="(notificationCount$ | async) && (notificationCount$ | async)! > 0">
+              Marcar todas como leídas
+            </button>
+            <button mat-icon-button (click)="clearAllNotifications()" matTooltip="Limpiar todas">
+              <mat-icon>clear_all</mat-icon>
+            </button>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="notifications-list" (click)="$event.stopPropagation()">
+          <ng-container *ngIf="(notifications$ | async) as notifications">
+            <div *ngIf="notifications.length === 0" class="no-notifications">
+              <mat-icon>notifications_off</mat-icon>
+              <p>No hay notificaciones</p>
+            </div>
+            <button
+              mat-menu-item
+              *ngFor="let notification of notifications"
+              (click)="onNotificationClick(notification)"
+              class="notification-item"
+              [class.unread]="!notification.read"
+            >
+              <div class="notification-content">
+                <mat-icon [color]="getNotificationColor(notification.type)">
+                  {{ getNotificationIcon(notification.type) }}
+                </mat-icon>
+                <div class="notification-text">
+                  <div class="notification-title">{{ notification.title }}</div>
+                  <div class="notification-message">{{ notification.message }}</div>
+                  <div class="notification-time">{{ notification.timestamp | date: 'short' }}</div>
+                </div>
+              </div>
+            </button>
+          </ng-container>
+        </div>
+      </mat-menu>
 
       <!-- User Menu -->
       <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">

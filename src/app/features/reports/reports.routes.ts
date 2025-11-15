@@ -4,7 +4,13 @@ export const routes: Routes = [
   {
     path: '',
     children: [
-      // TODO: Implement reports routes
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/reports-dashboard/reports-dashboard.component').then(
+            (m) => m.ReportsDashboardComponent
+          ),
+      },
     ],
   },
 ];
