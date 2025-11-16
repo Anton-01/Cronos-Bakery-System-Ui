@@ -1,0 +1,30 @@
+<div class="reports-container">
+  <h1>
+    <mat-icon>assessment</mat-icon>
+    Reportes y Análisis
+  </h1>
+
+  <p class="subtitle">Selecciona el tipo de reporte que deseas generar</p>
+
+  <div class="reports-grid">
+    <mat-card *ngFor="let report of reports" class="report-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>{{ report.icon }}</mat-icon>
+        <mat-card-title>{{ report.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ report.description }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary">
+          <mat-icon>visibility</mat-icon>
+          Ver Reporte
+        </button>
+        <button mat-button>
+          <mat-icon>download</mat-icon>
+          Exportar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

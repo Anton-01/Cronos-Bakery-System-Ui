@@ -1,0 +1,66 @@
+<div class="reauth-dialog">
+  <h2 mat-dialog-title>Sesión Expirada</h2>
+
+  <mat-dialog-content>
+    <p class="session-message">
+      Tu sesión ha expirado por inactividad. Por favor, ingresa tu contraseña para continuar.
+    </p>
+
+    <div class="user-info">
+      <mat-icon>person</mat-icon>
+      <span>{{ username }}</span>
+    </div>
+
+    <form [formGroup]="reauthForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password"
+          autocomplete="current-password"
+          required
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="togglePasswordVisibility()"
+          [attr.aria-label]="'Ocultar contraseña'"
+          [attr.aria-pressed]="hidePassword"
+        >
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (f['password'].invalid && f['password'].touched) {
+          <mat-error>
+            @if (f['password'].hasError('required')) {
+              La contraseña es requerida
+            }
+            @if (f['password'].hasError('minlength')) {
+              La contraseña debe tener al menos 6 caracteres
+            }
+          </mat-error>
+        }
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="cancel()" [disabled]="loading">
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      (click)="onSubmit()"
+      [disabled]="loading || reauthForm.invalid"
+    >
+      @if (loading) {
+        <mat-spinner diameter="20"></mat-spinner>
+      } @else {
+        Renovar Sesión
+      }
+    </button>
+  </mat-dialog-actions>
+</div>

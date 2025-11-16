@@ -14,6 +14,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -40,6 +41,7 @@ import { Quote, QuoteStatus } from '../../../../shared/models';
     MatTooltipModule,
     MatSelectModule,
     MatDividerModule,
+    MatDialogModule,
     TranslateModule,
   ],
   templateUrl: './quotes-list.component.html',
@@ -48,6 +50,7 @@ import { Quote, QuoteStatus } from '../../../../shared/models';
 export class QuotesListComponent implements OnInit {
   private readonly quotesService = inject(QuotesService);
   private readonly notificationService = inject(NotificationService);
+  private readonly dialog = inject(MatDialog);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -121,7 +124,8 @@ export class QuotesListComponent implements OnInit {
     this.loadQuotes();
   }
 
-  onSortChange(sort: Sort): void {
+  onSortChange(_sort: Sort): void {
+    // Sort is handled by MatSort directive
     this.loadQuotes();
   }
 
@@ -130,8 +134,15 @@ export class QuotesListComponent implements OnInit {
   }
 
   viewQuote(quote: Quote): void {
-    console.log('View quote:', quote);
-    // TODO: Implement quote details view
+    import('../quote-details-dialog/quote-details-dialog.component').then(
+      (m) => {
+        this.dialog.open(m.QuoteDetailsDialogComponent, {
+          width: '900px',
+          maxHeight: '90vh',
+          data: quote,
+        });
+      }
+    );
   }
 
   editQuote(quote: Quote): void {

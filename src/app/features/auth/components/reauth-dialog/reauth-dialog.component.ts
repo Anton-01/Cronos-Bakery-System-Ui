@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,70 +9,70 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../../../../core/services/auth.service';
 import { NotificationService } from '../../../../core/services/notification.service';
-import { CustomValidators } from '../../../../shared/validators/custom-validators';
 
 @Component({
-  selector: 'app-forgot-password',
+  selector: 'app-reauth-dialog',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatCardModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
   ],
-  templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.scss',
+  templateUrl: './reauth-dialog.component.html',
+  styleUrl: './reauth-dialog.component.scss',
 })
-export class ForgotPasswordComponent implements OnInit {
-  forgotPasswordForm!: FormGroup;
+export class ReauthDialogComponent implements OnInit {
+  reauthForm!: FormGroup;
   loading = false;
-  emailSent = false;
+  hidePassword = true;
+  username = '';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private notificationService: NotificationService,
-    private router: Router
+    private dialogRef: MatDialogRef<ReauthDialogComponent>
   ) {}
 
   ngOnInit(): void {
     this.initForm();
+    const currentUser = this.authService.currentUserValue;
+    this.username = currentUser?.username || '';
   }
 
   private initForm(): void {
-    this.forgotPasswordForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email, CustomValidators.validEmail()]],
+    this.reauthForm = this.fb.group({
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   get f() {
-    return this.forgotPasswordForm.controls;
+    return this.reauthForm.controls;
   }
 
   onSubmit(): void {
-    if (this.forgotPasswordForm.invalid) {
-      this.forgotPasswordForm.markAllAsTouched();
+    if (this.reauthForm.invalid) {
+      this.reauthForm.markAllAsTouched();
       return;
     }
 
     this.loading = true;
-    const email = this.f['email'].value;
+    const password = this.f['password'].value;
 
-    this.authService.forgotPassword(email).subscribe({
+    this.authService.reAuthenticate(password).subscribe({
       next: () => {
-        this.emailSent = true;
-        this.notificationService.success(
-          `Se ha enviado un correo de recuperación a ${email}`,
-          'Email Enviado'
-        );
+        this.notificationService.success('Sesión renovada exitosamente');
+        this.dialogRef.close(true);
       },
       error: (error) => {
-        const errorMessage = error.error?.message || 'Error al enviar correo de recuperación';
-        this.notificationService.error(errorMessage, 'Error');
+        this.loading = false;
+        const errorMessage = error.error?.message || 'Contraseña incorrecta';
+        this.notificationService.error(errorMessage);
       },
       complete: () => {
         this.loading = false;
@@ -81,12 +80,11 @@ export class ForgotPasswordComponent implements OnInit {
     });
   }
 
-  onBackToLogin(): void {
-    this.router.navigate(['/auth/login']);
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
   }
 
-  onResendEmail(): void {
-    this.emailSent = false;
-    this.onSubmit();
+  cancel(): void {
+    this.dialogRef.close(false);
   }
 }

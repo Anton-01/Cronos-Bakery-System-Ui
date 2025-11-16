@@ -118,3 +118,153 @@
     gap: variables.$spacing-md;
   }
 }
+
+::ng-deep .notifications-menu {
+  margin-top: variables.$spacing-sm;
+  min-width: 400px;
+  max-width: 450px;
+
+  .mat-mdc-menu-content {
+    padding: 0;
+  }
+
+  .notifications-header {
+    padding: variables.$spacing-md;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+      margin: 0;
+      font-size: variables.$font-size-lg;
+      font-weight: variables.$font-weight-medium;
+    }
+
+    .notifications-actions {
+      display: flex;
+      align-items: center;
+      gap: variables.$spacing-xs;
+
+      button {
+        font-size: variables.$font-size-sm;
+      }
+    }
+  }
+
+  .notifications-list {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .no-notifications {
+    padding: variables.$spacing-xl;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.54);
+
+    mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      margin-bottom: variables.$spacing-sm;
+    }
+
+    p {
+      margin: 0;
+      font-size: variables.$font-size-md;
+    }
+  }
+
+  .notification-item {
+    min-height: auto;
+    padding: variables.$spacing-md;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    white-space: normal;
+    height: auto;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    &.unread {
+      background-color: rgba(63, 81, 181, 0.08);
+
+      &:hover {
+        background-color: rgba(63, 81, 181, 0.12);
+      }
+    }
+
+    .notification-content {
+      display: flex;
+      gap: variables.$spacing-md;
+      width: 100%;
+
+      mat-icon {
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .notification-text {
+        flex: 1;
+        min-width: 0;
+
+        .notification-title {
+          font-weight: variables.$font-weight-medium;
+          font-size: variables.$font-size-md;
+          margin-bottom: 4px;
+          color: rgba(0, 0, 0, 0.87);
+        }
+
+        .notification-message {
+          font-size: variables.$font-size-sm;
+          color: rgba(0, 0, 0, 0.6);
+          margin-bottom: 4px;
+          line-height: 1.4;
+        }
+
+        .notification-time {
+          font-size: variables.$font-size-xs;
+          color: rgba(0, 0, 0, 0.38);
+        }
+      }
+    }
+  }
+}
+
+// Dark theme support
+@media (prefers-color-scheme: dark) {
+  ::ng-deep .notifications-menu {
+    .no-notifications {
+      color: rgba(255, 255, 255, 0.54);
+    }
+
+    .notification-item {
+      border-bottom-color: rgba(255, 255, 255, 0.12);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.04);
+      }
+
+      &.unread {
+        background-color: rgba(63, 81, 181, 0.12);
+
+        &:hover {
+          background-color: rgba(63, 81, 181, 0.16);
+        }
+      }
+
+      .notification-content .notification-text {
+        .notification-title {
+          color: rgba(255, 255, 255, 0.87);
+        }
+
+        .notification-message {
+          color: rgba(255, 255, 255, 0.6);
+        }
+
+        .notification-time {
+          color: rgba(255, 255, 255, 0.38);
+        }
+      }
+    }
+  }
+}

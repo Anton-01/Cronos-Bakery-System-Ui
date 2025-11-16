@@ -114,7 +114,8 @@ export class RecipesListComponent implements OnInit {
     this.loadRecipes();
   }
 
-  onSortChange(sort: Sort): void {
+  onSortChange(_sort: Sort): void {
+    // Sort is handled by MatSort directive
     this.loadRecipes();
   }
 

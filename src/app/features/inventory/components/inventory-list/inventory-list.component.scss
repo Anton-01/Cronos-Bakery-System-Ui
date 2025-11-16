@@ -1,0 +1,23 @@
+.inventory-container {
+  padding: 2rem;
+
+  mat-card {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  mat-card-header {
+    margin-bottom: 1rem;
+  }
+
+  mat-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  ul {
+    line-height: 2;
+  }
+}

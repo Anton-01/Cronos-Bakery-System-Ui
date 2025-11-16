@@ -139,7 +139,8 @@ export class RawMaterialsListComponent implements OnInit {
     this.loadRawMaterials();
   }
 
-  onSortChange(sort: Sort): void {
+  onSortChange(_sort: Sort): void {
+    // Sort is handled by MatSort directive
     this.loadRawMaterials();
   }
 
@@ -153,8 +154,15 @@ export class RawMaterialsListComponent implements OnInit {
   }
 
   viewDetails(material: RawMaterial): void {
-    // TODO: Navigate to details page or open dialog
-    console.log('View details:', material);
+    import('../material-details-dialog/material-details-dialog.component').then(
+      (m) => {
+        this.dialog.open(m.MaterialDetailsDialogComponent, {
+          width: '700px',
+          maxHeight: '90vh',
+          data: material,
+        });
+      }
+    );
   }
 
   deleteMaterial(material: RawMaterial): void {
