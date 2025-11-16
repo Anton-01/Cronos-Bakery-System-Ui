@@ -68,12 +68,27 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 }
 
+/**
+ * Functional HTTP Interceptor to attach JWT token to requests
+ * This is the primary interceptor for token management
+ */
 export const authInterceptorFn: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
   const authService = inject(AuthService);
+
+  // Skip token attachment for auth endpoints
+  if (req.url.includes('/auth/login') || req.url.includes('/auth/refresh')) {
+    return next(req);
+  }
+
   const accessToken = authService.getAccessToken();
 
-  if ( accessToken && !req.url.includes('/auth/login') && !req.url.includes('/auth/refresh')) {
-    const authReq = req.clone({ setHeaders: { Authorization: `Bearer ${accessToken}`, }, });
+  // Attach token if available
+  if (accessToken) {
+    const authReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return next(authReq);
   }
 

@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { ApiResponse, CreateUserRequest, LoginRequest, LoginResponse, RefreshTokenRequest, TokenResponse, User, UserResponse, } from '../../shared/models';
 import { StorageService } from './storage.service';
 import { jwtDecode } from 'jwt-decode';
+import { handleError, createErrorCatcher } from '../../shared/utils/error-handler.util';
 
 /**
  * Authentication service
@@ -48,10 +49,7 @@ export class AuthService {
       tap((loginResponse) => {
         this.handleLoginResponse(loginResponse);
       }),
-      catchError((error) => {
-        console.error('Login error:', error);
-        return throwError(() => error);
-      })
+      catchError(handleError({ context: 'Login', customMessage: 'Error al iniciar sesión' }))
     );
   }
 
@@ -61,10 +59,7 @@ export class AuthService {
   register(user: CreateUserRequest): Observable<UserResponse> {
     return this.http.post<ApiResponse<UserResponse>>(`${this.API_URL}/register`, user).pipe(
       map((response) => response.data),
-      catchError((error) => {
-        console.error('Registration error:', error);
-        return throwError(() => error);
-      })
+      catchError(handleError({ context: 'Registration', customMessage: 'Error al registrar usuario' }))
     );
   }
 
@@ -74,10 +69,7 @@ export class AuthService {
   forgotPassword(email: string): Observable<void> {
     return this.http.post<ApiResponse<void>>(`${this.API_URL}/forgot-password`, { email }).pipe(
       map(() => undefined),
-      catchError((error) => {
-        console.error('Forgot password error:', error);
-        return throwError(() => error);
-      })
+      catchError(handleError({ context: 'Forgot password', customMessage: 'Error al solicitar recuperación de contraseña' }))
     );
   }
 
@@ -90,10 +82,7 @@ export class AuthService {
       newPassword,
     }).pipe(
       map(() => undefined),
-      catchError((error) => {
-        console.error('Reset password error:', error);
-        return throwError(() => error);
-      })
+      catchError(handleError({ context: 'Reset password', customMessage: 'Error al restablecer contraseña' }))
     );
   }
 
@@ -114,9 +103,8 @@ export class AuthService {
         this.storage.updateLastActivity();
       }),
       catchError((error) => {
-        console.error('Token refresh error:', error);
         this.logout();
-        return throwError(() => error);
+        return handleError({ context: 'Refresh token', customMessage: 'Error al renovar token' })(error);
       })
     );
   }
@@ -206,13 +194,8 @@ export class AuthService {
       const now = Math.floor(Date.now() / 1000);
       return exp > now;
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error('Error:', error.message);
-      } else if (error instanceof HttpErrorResponse) {
-        console.error('HTTP Error:', error.status, error.message);
-      } else {
-        console.error('Error inesperado:', error);
-      }
+      const errorCatcher = createErrorCatcher({ context: 'Token validation' });
+      errorCatcher(error);
       return false;
     }
   }
@@ -254,7 +237,8 @@ export class AuthService {
     try {
       return jwtDecode(token);
     } catch (error) {
-      console.error('Error decoding token:', error);
+      const errorCatcher = createErrorCatcher({ context: 'Token decode' });
+      errorCatcher(error);
       return null;
     }
   }
