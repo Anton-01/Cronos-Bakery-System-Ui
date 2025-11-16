@@ -1,20 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import {
-  ApiResponse,
-  CreateUserRequest,
-  LoginRequest,
-  LoginResponse,
-  RefreshTokenRequest,
-  TokenResponse,
-  User,
-  UserResponse,
-} from '../../shared/models';
+import { ApiResponse, CreateUserRequest, LoginRequest, LoginResponse, RefreshTokenRequest, TokenResponse, User, UserResponse, } from '../../shared/models';
 import { StorageService } from './storage.service';
+import { jwtDecode } from 'jwt-decode';
 
 /**
  * Authentication service
@@ -24,15 +16,18 @@ import { StorageService } from './storage.service';
   providedIn: 'root',
 })
 export class AuthService {
+  private http = inject(HttpClient);
+  private storage = inject(StorageService);
+  private router = inject(Router);
+
   private readonly API_URL = `${environment.apiUrl}/auth`;
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser$: Observable<User | null>;
 
-  constructor(
-    private http: HttpClient,
-    private storage: StorageService,
-    private router: Router
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.currentUserSubject = new BehaviorSubject<User | null>(this.storage.getUserData<User>());
     this.currentUser$ = this.currentUserSubject.asObservable();
   }
@@ -135,10 +130,7 @@ export class AuthService {
     const userData = this.storage.getUserData<User>();
 
     if (!refreshToken) {
-      return new Observable(observer => {
-        observer.next(false);
-        observer.complete();
-      });
+      return of(false);
     }
 
     // If session is still active (within 30 minutes), just restore user data
@@ -146,10 +138,7 @@ export class AuthService {
       if (userData) {
         this.currentUserSubject.next(userData);
         this.storage.updateLastActivity();
-        return new Observable(observer => {
-          observer.next(true);
-          observer.complete();
-        });
+        return of(false);
       }
     }
 
@@ -163,10 +152,7 @@ export class AuthService {
       }),
       catchError(() => {
         this.clearUserData();
-        return new Observable(observer => {
-          observer.next(false);
-          observer.complete();
-        });
+        return of(false);
       })
     );
   }
@@ -219,7 +205,14 @@ export class AuthService {
       const exp = payload.exp;
       const now = Math.floor(Date.now() / 1000);
       return exp > now;
-    } catch (error) {
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error('Error:', error.message);
+      } else if (error instanceof HttpErrorResponse) {
+        console.error('HTTP Error:', error.status, error.message);
+      } else {
+        console.error('Error inesperado:', error);
+      }
       return false;
     }
   }
@@ -259,15 +252,7 @@ export class AuthService {
    */
   private decodeToken(token: string): any {
     try {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(
-        atob(base64)
-          .split('')
-          .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-          .join('')
-      );
-      return JSON.parse(jsonPayload);
+      return jwtDecode(token);
     } catch (error) {
       console.error('Error decoding token:', error);
       return null;

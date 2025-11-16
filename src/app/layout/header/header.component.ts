@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -32,18 +32,21 @@ import { Observable } from 'rxjs';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+  private authService = inject(AuthService);
+  private themeService = inject(ThemeService);
+  private systemNotificationsService = inject(SystemNotificationsService);
+  private router = inject(Router);
+
   @Output() toggleSidebar = new EventEmitter<void>();
 
   currentUser$: Observable<User | null>;
   notificationCount$: Observable<number>;
   notifications$: Observable<SystemNotification[]>;
 
-  constructor(
-    private authService: AuthService,
-    private themeService: ThemeService,
-    private systemNotificationsService: SystemNotificationsService,
-    private router: Router
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.currentUser$ = this.authService.currentUser$;
     this.notificationCount$ = this.systemNotificationsService.getUnreadCount();
     this.notifications$ = this.systemNotificationsService.getNotifications();

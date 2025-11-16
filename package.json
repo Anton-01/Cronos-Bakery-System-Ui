@@ -53,6 +53,7 @@
     "date-fns": "^4.1.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.3",
+    "jwt-decode": "^4.0.0",
     "ng2-charts": "^8.0.0",
     "ngx-spinner": "^19.0.0",
     "ngx-toastr": "^19.1.0",

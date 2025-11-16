@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -12,26 +12,20 @@ import { Quote, QuoteStatus } from '../../../../shared/models';
 @Component({
   selector: 'app-quote-details-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatChipsModule,
-    MatTableModule,
-  ],
+  imports: [ CommonModule, RouterModule, MatDialogModule, MatButtonModule, MatIconModule, MatDividerModule, MatChipsModule, MatTableModule,],
   templateUrl: './quote-details-dialog.component.html',
   styleUrl: './quote-details-dialog.component.scss',
 })
 export class QuoteDetailsDialogComponent {
+  dialogRef = inject<MatDialogRef<QuoteDetailsDialogComponent>>(MatDialogRef);
+  quote = inject<Quote>(MAT_DIALOG_DATA);
+
   displayedColumns: string[] = ['recipe', 'quantity', 'unitPrice', 'subtotal'];
 
-  constructor(
-    public dialogRef: MatDialogRef<QuoteDetailsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public quote: Quote
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   getStatusColor(): string {
     switch (this.quote.status) {

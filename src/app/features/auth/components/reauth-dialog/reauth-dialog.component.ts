@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -27,17 +27,20 @@ import { NotificationService } from '../../../../core/services/notification.serv
   styleUrl: './reauth-dialog.component.scss',
 })
 export class ReauthDialogComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private notificationService = inject(NotificationService);
+  private dialogRef = inject<MatDialogRef<ReauthDialogComponent>>(MatDialogRef);
+
   reauthForm!: FormGroup;
   loading = false;
   hidePassword = true;
   username = '';
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private notificationService: NotificationService,
-    private dialogRef: MatDialogRef<ReauthDialogComponent>
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.initForm();

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -11,23 +11,18 @@ import { RawMaterial } from '../../../../shared/models';
 @Component({
   selector: 'app-material-details-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule,
-    MatChipsModule,
-  ],
+  imports: [ CommonModule, RouterModule, MatDialogModule, MatButtonModule, MatIconModule, MatDividerModule, MatChipsModule,],
   templateUrl: './material-details-dialog.component.html',
   styleUrl: './material-details-dialog.component.scss',
 })
 export class MaterialDetailsDialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<MaterialDetailsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public material: RawMaterial
-  ) {}
+  dialogRef = inject<MatDialogRef<MaterialDetailsDialogComponent>>(MatDialogRef);
+  material = inject<RawMaterial>(MAT_DIALOG_DATA);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   isLowStock(): boolean {
     return this.material.currentStock <= this.material.minimumStock;

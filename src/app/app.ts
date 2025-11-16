@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ThemeService } from './core/services/theme.service';
@@ -13,14 +13,17 @@ import { AuthService } from './core/services/auth.service';
   standalone: true,
 })
 export class App implements OnInit {
+  private themeService = inject(ThemeService);
+  private languageService = inject(LanguageService);
+  private authService = inject(AuthService);
+
   title = 'Cronos Bakery System';
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(
-    private themeService: ThemeService,
-    private languageService: LanguageService,
-    private authService: AuthService
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
     // Initialize theme listener for auto mode

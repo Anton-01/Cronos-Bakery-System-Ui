@@ -23,6 +23,7 @@ export interface QuoteResponse {
   shareToken?: string;
   isShareable: boolean;
   createdAt: string;
+  updatedAt?: string;
 }
 
 /**

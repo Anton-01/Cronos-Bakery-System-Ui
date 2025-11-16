@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -32,18 +32,21 @@ import { LoginRequest } from '../../../../shared/models';
   styleUrl: './two-factor-auth.component.scss',
 })
 export class TwoFactorAuthComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private notificationService = inject(NotificationService);
+  private router = inject(Router);
+
   twoFactorForm!: FormGroup;
   loading = false;
   username: string = '';
   qrCodeUrl: string = 'otpauth://totp/CronosBakery:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=CronosBakery';
   showQrCode = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private notificationService: NotificationService,
-    private router: Router
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     // Get username from navigation state
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state) {

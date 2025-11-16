@@ -18,7 +18,7 @@
         </div>
         <div class="detail-item">
           <span class="label">Unidad de Medida:</span>
-          <span class="value">{{ material.unitOfMeasure }}</span>
+          <span class="value">{{ material.purchaseUnit.name }}</span>
         </div>
         <div class="detail-item">
           <span class="label">Estado:</span>
@@ -36,11 +36,11 @@
       <div class="detail-grid">
         <div class="detail-item">
           <span class="label">Stock Actual:</span>
-          <span class="value stock-value">{{ material.currentStock }} {{ material.unitOfMeasure }}</span>
+          <span class="value stock-value">{{ material.currentStock }} {{ material.purchaseUnit.name }}</span>
         </div>
         <div class="detail-item">
           <span class="label">Stock Mínimo:</span>
-          <span class="value">{{ material.minimumStock }} {{ material.unitOfMeasure }}</span>
+          <span class="value">{{ material.minimumStock }} {{ material.purchaseUnit.name }}</span>
         </div>
         <div class="detail-item">
           <span class="label">Estado del Stock:</span>

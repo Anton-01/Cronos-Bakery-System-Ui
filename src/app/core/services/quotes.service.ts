@@ -2,14 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import {
-  Quote,
-  CreateQuoteRequest,
-  UpdateQuoteRequest,
-  QuoteStatus,
-} from '../../shared/models/quote.model';
+import { Quote, CreateQuoteRequest, UpdateQuoteRequest, QuoteStatus, } from '../../shared/models';
 import { PageResponse } from '../../shared/models/common.model';
-import { ApiResponse } from '../../shared/models/api-response.model';
+import { ApiResponse } from '../../shared/models';
 import { extractData } from '../../shared/operators/api-response.operator';
 
 @Injectable({

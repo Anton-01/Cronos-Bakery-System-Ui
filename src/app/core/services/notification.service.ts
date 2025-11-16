@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 /**
@@ -8,7 +8,12 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root',
 })
 export class NotificationService {
-  constructor(private toastr: ToastrService) {}
+  private toastr = inject(ToastrService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   /**
    * Show success notification

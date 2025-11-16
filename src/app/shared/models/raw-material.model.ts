@@ -20,6 +20,8 @@ export interface RawMaterialResponse {
   allergens: AllergenResponse[];
   needsRecalculation: boolean;
   isActive: boolean;
+  createdAt: string;
+  updatedAt?: string;
 }
 
 /**
